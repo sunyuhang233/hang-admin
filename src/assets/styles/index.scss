@@ -1,0 +1,206 @@
+// 自定义类
+.position-c-c {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+// 背景颜色
+.bg-mark {
+  position: absolute;
+  transform: translate(50%, -50%);
+  z-index: -99;
+  width: 60%;
+  height: 60%;
+  filter: blur(60px);
+  border-radius: 50%;
+  background: radial-gradient(
+      104.24% 141.88% at 8.26% 9.64%,
+      #b95be6 0%,
+      rgba(185, 91, 230, 0.18) 69.92%,
+      rgba(185, 91, 230, 0) 100%
+    ),
+    radial-gradient(
+      103.57% 140.97% at 14.06% 105.21%,
+      #f97c59 0%,
+      rgba(249, 124, 89, 0.19) 72.45%,
+      rgba(249, 124, 89, 0) 100%
+    );
+}
+
+// 文本折叠
+.text-overflow-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.text-overflow-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.text-overflow-4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.text-overflow-h {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: var(--h);
+  -webkit-box-orient: vertical;
+}
+.text-overflow-5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+// 渐变背景
+.bg-linear {
+  background-image: linear-gradient(to right, var(--el-color-primary) 0, transparent 50%);
+  backdrop-filter: blur(1em);
+}
+/**------------------------------element-plus---------------------------------------**/
+
+// 按钮
+.el-button {
+  transition: $transition-delay;
+}
+
+// element-plus
+// 消息确认框
+.el-message-box {
+  .el-message-box__btns {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0.4em 0 0.8em 0;
+    .el-button {
+      min-width: 40%;
+      margin: 0 auto;
+      height: auto;
+    }
+  }
+  .el-message-box__header {
+    text-align: center;
+    font-size: 2em;
+    letter-spacing: 0.1em;
+  }
+
+  .el-message-box__content {
+    margin: 0.4em 1em;
+  }
+  .el-message-box__title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+.el-notification.right.right.right {
+  top: 34px;
+  right: 34px;
+}
+
+// 单选钮
+.el-radio-group {
+  font-size: medium;
+  .el-radio__inner {
+    border-radius: 4px;
+    transform: scale(1.1);
+  }
+}
+// popper
+.el-popper-init {
+  padding: 2px 4px;
+}
+
+// el-menu--popup 折叠弹出菜单
+.el-popper {
+  border-radius: 6px;
+}
+.el-menu--popup-container {
+  .el-menu--popup {
+    min-width: auto;
+    width: auto;
+    padding: 10px;
+    border-radius: 6px;
+    .el-menu-item {
+      border: 1px dashed transparent;
+      border-radius: 6px;
+      &:hover {
+        border: 1px dashed var(--el-color-primary);
+      }
+    }
+  }
+}
+
+.el-pagination {
+  .number {
+    transition: $transition-delay;
+  }
+}
+
+.el-scrollbar__bar,
+.el-scrollbar__thumb {
+  opacity: 0.3;
+}
+
+// el-loading
+// .el-loading-spinner .circular{
+//   width: 42px;
+//   height: 42px;
+//   animation: ci 2s linear infinite;
+//   display: none;
+// }
+// .el-loading-spinner{
+//   background: url(/loading_static.svg) no-repeat;
+//   background-size: 200px 200px;
+//   width: 200px !important;
+//   height: 200px;
+//   position: relative;
+//   top: 50%;
+//   left: 50%;
+//   margin-top: -100px !important;
+//   margin-left: -100px;
+// }
+.el-table {
+  .el-table__empty-text {
+    font-size: 1rem;
+    letter-spacing: .2rem;
+  }
+}
+
+/**------------------------------vuepress-markdown---------------------------------------**/
+.v-md-editor,
+.vuepress-markdown-body {
+  border-radius: 8px;
+  padding: 1rem;
+  &,
+  * {
+    background-color: #fff;
+    color: var(--el-color-black);
+  }
+}
+.dark {
+  .v-md-editor,
+  .vuepress-markdown-body {
+    &,
+    * {
+      background-color: #1b1b1b;
+      color: #fff;
+    }
+  }
+  .v-md-editor__toolbar-item:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--el-color-black);
+  }
+}

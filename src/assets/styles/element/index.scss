@@ -1,0 +1,188 @@
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  $border-radius: (
+    "base": 8px,
+    "small": 12px,
+    "round": 20px,
+    "circle": 100%
+  ),
+  $colors: (
+    "white": #f9fafb,
+    "black": #171c27,
+    "main": #5931f3,
+    "primary": (
+      "base": #5931f3
+    ),
+
+    "success": (
+      "base": #67c23a
+    ),
+    "warning": (
+      "base": #ffbf11f1
+    ),
+    "danger": (
+      "base": #ff4545
+    ),
+    "error": (
+      "base": #ff2323f6
+    ),
+    "info": (
+      "base": #10cf80
+    )
+  ),
+  $bg-color: (
+    "black": #171c27,
+    "primary": #303133
+  ),
+  $text-color: (
+    "primary": #303133,
+    "regular": #606266,
+    "secondary": #909399,
+    "placeholder": #a8abb2,
+    "disabled": #c0c4cc
+  ),
+
+  // button
+  $button-font-size:
+    (
+      "default": 14px,
+      "small": 12px
+    ),
+  $button-padding-vertical: (
+    "large": 12px,
+    "default": 8px,
+    "small": 6px
+  ),
+
+  $button-padding-horizontal: (
+    "large": 24px,
+    "default": 16px,
+    "small": 12px
+  ),
+  // $drawer
+  $drawer:
+    (
+      "padding-primary": 0px
+    ),
+  //
+  $carousel:
+    (
+      "arrow-font-size": 20px,
+      "arrow-size": 36px,
+      "arrow-background": rgba(31, 45, 61, 0.4),
+      "arrow-hover-background": rgba(31, 45, 61, 0.4),
+      "indicator-width": 30px,
+      "indicator-height": 2px,
+      "indicator-padding-horizontal": 4px,
+      "indicator-padding-vertical": 12px,
+      "indicator-out-color": getCssVar("border-color-hover")
+    ),
+  // el-card
+  $card:
+    (
+      "border-color": getCssVar("border-color", "light"),
+      "border-radius": 4px,
+      "padding": 2px,
+      "bg-color": getCssVar("fill-color", "blank")
+    ),
+  // message
+  $message:
+    (
+      "bg-color": getCssVar("color", "info", "light-9"),
+      "border-color": getCssVar("border-color-lighter"),
+      "padding": 10px 14px,
+      "close-size": 16px,
+      "close-icon-color": getCssVar("text-color-placeholder"),
+      "close-hover-color": getCssVar("text-color-secondary")
+    ),
+  $messagebox: (
+    "title-color": getCssVar("text-color-primary"),
+    "width": 320px,
+    "border-radius": 12px,
+    "font-size": getCssVar("font-size-large"),
+    "content-font-size": getCssVar("font-size-base"),
+    "content-color": getCssVar("text-color-regular"),
+    "error-font-size": 14px,
+    "padding-primary": 1rem
+  ),
+  $notification: (
+    "width": 320px,
+    "padding": 12px 26px 12px 12px,
+    "radius": 12px,
+    "icon-size": 24px,
+    "group-margin-left": 14px,
+    "group-margin-right": 8px
+  ),
+  // form
+  $input:(
+    'border-radius': 8px,
+    'width': 100%,
+  ),
+  $checkbox: (
+    "font-size": 1em,
+    "input-height": 1em,
+    "input-width": 1em,
+    "border-radius": 4px
+  ),
+  $radio: (
+    "font-size": 1em,
+    "input-height": 1em,
+    "input-width": 1em,
+    "input-border-radius": 4px
+  ),
+  $menu: (
+    "item-height": 40px,
+    "base-level-padding": 14px,
+    "level-padding": 14px,
+    "icon-width": 24px
+  ),
+  $pagination: (
+    "font-size": 14px,
+    // "bg-color": getCssVar("fill-color", "blank"),
+    // "text-color": getCssVar("text-color-primary"),
+    "border-radius": 4px,
+    // "button-color": getCssVar("text-color-primary"),
+    "button-width": 2em,
+    "button-height": 2em,
+    // "button-bg-color": getCssVar("fill-color"),
+    // "hover-color": getCssVar("color-primary"),
+    "font-size-small": 12px,
+    "button-width-small": 24px,
+    "button-height-small": 24px,
+    "item-gap": 16px
+  ),
+
+  // 表格
+  $table:
+    (
+      // "border": 1px solid getCssVar("table-border-color"),
+      // "border-color": getCssVar("border-color-lighter"),
+      // "text-color": getCssVar("text-color-default"),
+      // "current-row-bg-color": getCssVar("color-primary-light-9"),
+      // "fixed-box-shadow": getCssVar("box-shadow", "light"),
+      // "header-text-color": #fff,
+      // "header-bg-color": var(--el-color-),
+      // "bg-color": transparent,
+      // "row-hover-bg-color":#7a7a7a18,
+      // "tr-bg-color": transparent,
+      "expanded-cell-bg-color": #c5c5c51e,
+      // "fixed-left-column": inset 4px 0 4px -4px rgb(0 0 0 / 15%),
+      // "fixed-right-column": inset -4px 0 4px -4px rgb(0 0 0 / 15%)
+    ),
+  $table-font-size: (
+    "large": getCssVar("font-size", "base"),
+    "default": 14px,
+    "small": 12px
+  ),
+
+  $table-padding: (
+    "large": 12px 0,
+    "default": 0 0,
+    "small": 4px 0
+  ),
+
+  $table-cell-padding: (
+    "large": 0 16px,
+    "default": 0 12px,
+    "small": 0 8px
+  )
+);

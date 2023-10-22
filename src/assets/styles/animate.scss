@@ -1,0 +1,283 @@
+// fade动画
+.fade-enter-active,
+.fade-leave-active {
+  position: absolute;
+  transition: opacity calc($transition-delay / 2) ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// 左进右出滑动渐变
+.slice-lr-enter-active {
+  animation: fadeInLeft calc($transition-delay / 2) $animate-cubic;
+}
+.slice-lr-leave-active {
+  animation: fadeInLeft calc($transition-delay / 2) $animate-cubic reverse;
+}
+// popup从大到小
+.popup-enter-to,
+.popup-leave-from {
+  transition: calc($transition-delay / 2);
+  transform: scale(1);
+  opacity: 1;
+  transition-timing-function: $animate-cubic-bount;
+}
+.popup-enter-from,
+.popup-leave-to {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: calc($transition-delay / 2);
+}
+
+// popover上下突出
+.popY-enter-active,
+.popY-leave-active {
+  transition: all $transition-delay $animate-cubic;
+  transform: scaleY(1);
+  transform-origin: bottom;
+}
+
+.popY-enter-from,
+.popY-leave-to {
+  overflow: hidden;
+  transform: scaleY(0.6);
+  transform-origin: bottom;
+  opacity: 0;
+  transition: all $transition-delay $animate-cubic;
+}
+
+// fade-in-out
+.fade-in-out-enter-active {
+  animation: 0.2s fadeIn;
+}
+.fade-in-out-leave-active {
+  animation: 0.2s fadeIn reverse;
+}
+
+@keyframes fade-in-out {
+  0% {
+    transition: 0.3s;
+    width: 100%;
+    opacity: 0;
+  }
+  100% {
+    transition: 0.3s;
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.animate__animated {
+  animation-duration: $transition-delay;
+}
+
+// 夜间模式切换动画
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 9999;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+.dark::view-transition-new(root) {
+  z-index: 9999;
+}
+
+@keyframes blur-in {
+  0% {
+    transition: $transition-delay;
+    opacity: 0.8;
+    filter: blur(2px);
+  }
+  100% {
+    transition: $transition-delay;
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/* 变换边框 */
+@keyframes border-transform {
+  0%,
+  100% {
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+  }
+  14% {
+    border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%;
+  }
+  28% {
+    border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%;
+  }
+  42% {
+    border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%;
+  }
+  56% {
+    border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%;
+  }
+  70% {
+    border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
+  }
+  84% {
+    border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
+  }
+}
+
+// item动画
+.item-list-move,
+.item-list-enter-active,
+.item-list-leave-active {
+  transition: all 0.4s $animate-cubic-bount;
+  position: absolute;
+}
+
+.item-list-enter-from,
+.item-list-leave-to {
+  opacity: 0;
+  filter: blur(2%);
+  transform: translateX(20%);
+}
+
+.item-list-leave-active {
+  z-index: -1;
+}
+
+// group动画
+.group-list-move,
+.group-list-enter-active,
+.group-list-leave-active {
+  transition: all 0.4s $animate-cubic-bount;
+  position: absolute;
+}
+
+.group-list-enter-from,
+.group-list-leave-to {
+  opacity: 0;
+}
+
+.group-list-leave-active {
+  z-index: -1;
+}
+
+// fade动画
+.fade-bt-list-move,
+.fade-bt-list-enter-active,
+.fade-bt-list-leave-active {
+  transition: 0.4s ease;
+  position: absolute;
+}
+
+.fade-bt-list-enter-from {
+  opacity: 0;
+  transform: translateY(30%);
+}
+.fade-bt-list-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translateY(30%);
+}
+
+.fade-bt-list-leave-active {
+  z-index: -1;
+}
+//  scale
+.filp-scale-list-move,
+.filp-scale-list-enter-active,
+.filp-scale-list-leave-active {
+  transition: 0.4s ease;
+  position: absolute;
+}
+
+.filp-scale-list-enter-from,
+.filp-scale-list-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) rotateX(90deg);
+}
+
+.filp-scale-list-leave-active {
+  z-index: -1;
+}
+
+// fade动画
+.fade-lr-move,
+.fade-lr-enter-active,
+.fade-lr-leave-active {
+  transition: 0.2s ease-in-out;
+}
+
+.fade-lr-enter-from,
+.fade-lr-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+  z-index: 1;
+}
+
+.fade-lr-leave-active {
+  z-index: -1;
+}
+// fade动画
+.fade-lr-list-move,
+.fade-lr-list-enter-active,
+.fade-lr-list-leave-active {
+  transition: 0.4s ease;
+}
+
+.fade-lr-list-enter-from,
+.fade-lr-list-leave-to {
+  opacity: 0;
+  transform: translateX(20%);
+}
+
+.fade-lr-list-leave-active {
+  z-index: -1;
+}
+
+// 页面
+.sliceX-enter-active,
+.sliceX-leave-active {
+  transform: translateX(0);
+  transition: transform $transition-delay ease-in;
+}
+
+.sliceX-enter-from,
+.sliceX-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+// 图标动画
+// 购物车撞到背景
+@keyframes shopcart {
+  0% {
+    transform: translateX(0%);
+  }
+  30% {
+    transform: translateX(20%) rotate(0deg);
+  }
+  40% {
+    transform: translate(22%) rotate(-15deg);
+  }
+  60% {
+    transform: translateX(-10%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+// 购物车撞到背景
+@keyframes shopcart-rote {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(0%) rotate(-20deg);
+  }
+}
