@@ -1,15 +1,35 @@
-/* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
-
-module.exports = {
-  root: true,
-  'extends': [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier/skip-formatting'
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "@antfu", 
+    "@unocss",
+    "plugin:vue/vue3-essential"
   ],
-  parserOptions: {
-    ecmaVersion: 'latest'
-  }
+  "plugins": ["vue"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "parser": "@typescript-eslint/parser"
+  },
+  "rules": {     
+    // vue
+    "vue/multi-word-component-names": ["off", {}],
+    // base 
+    "unused-imports/no-unused-vars":  "off", 
+    "no-console":"off",
+    "no-multiple-empty-lines": ["warn", { "max": 2, "maxBOF": 1 }],// 空行
+    "semi": ["error", "always"], // 结尾;
+    "quotes":["error", "double"], // 双引号
+    "no-trailing-spaces": "error",
+    // ts
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/ban-ts-comment": "off", 
+    "@typescript-eslint/quotes":["error", "double"] // 双引号
+
+  }  
 }
