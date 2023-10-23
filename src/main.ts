@@ -14,7 +14,9 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-
+// swiepr
+import 'swiper/css'
+import 'swiper/css/navigation'
 // echart
 import VueCharts from 'vue-echarts'
 import * as echarts from './plugins/echart'
