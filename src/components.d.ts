@@ -9,11 +9,13 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BellBtn: typeof import('./components/btn/BellBtn.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     HeaderMenu: typeof import('./components/Menu/HeaderMenu.vue')['default']
     LeftMenu: typeof import('./components/Menu/LeftMenu.vue')['default']
     LoginForm: typeof import('./components/main/Login/LoginForm.vue')['default']

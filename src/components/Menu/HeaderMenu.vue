@@ -28,6 +28,7 @@ const isShowSearch = ref<boolean>(false)
     </div>
     <div class="right flex-row-c-c">
       <!-- 消息 -->
+      <BellBtn/>
       <!-- 退出登录 -->
       <!-- 夜间 -->
       <ThemeSwitch />
