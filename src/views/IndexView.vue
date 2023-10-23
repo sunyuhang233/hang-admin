@@ -1,7 +1,13 @@
 <template>
   <div flex flex-col class="tracking-0.1em">
     <WelcomeCard />
-     <!-- 主内容 -->
+    <!-- 主内容 -->
+    <div grid="~ cols-1 gap-8 items-start" lg:grid="~ cols-[4fr_2fr]  gap-8 " mb-4 class="content">
+      <!-- 左侧 -->
+      <div class="left" grid="~ cols-1 gap-8"></div>
+      <!-- 右侧 -->
+      <div grid="~ cols-1 gap-8 " class="right"></div>
+    </div>
   </div>
 </template>
 
