@@ -18,11 +18,12 @@ import router from './router'
 // echart
 import VueCharts from 'vue-echarts'
 import * as echarts from './plugins/echart'
-
+import directives from './plugins/directives'
 const app = createApp(App)
 // 注册
 app.component('VChart', VueCharts)
 app.use(createPinia())
+app.use(directives) // 指令
 app.use(router)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)

@@ -27,7 +27,7 @@ const orderTotalList = ref<any[]>([
     color: '#f56c6c',
     class: '',
     icon: 'el-icon-edit',
-    nums: 10,
+    nums: 80,
         status: OrdersStatus.PAID,
     
     },
@@ -36,7 +36,7 @@ const orderTotalList = ref<any[]>([
     color: '#f56c6c',
     class: '',
     icon: 'el-icon-edit',
-    nums: 10,
+    nums: 200,
         status: OrdersStatus.DELIVERED,
   },
   {
@@ -44,7 +44,7 @@ const orderTotalList = ref<any[]>([
     color: '#f56c6c',
     class: '',
     icon: 'el-icon-edit',
-    nums: 10,
+    nums: 304,
     status: OrdersStatus.DELAY_CANCELED,
   },
   {
@@ -52,7 +52,7 @@ const orderTotalList = ref<any[]>([
     color: '#f56c6c',
     class: '',
     icon: 'el-icon-edit',
-    nums: 10,
+    nums: 999,
     status: OrdersStatus.REFUND_SUCCESS,
   },
 ])
