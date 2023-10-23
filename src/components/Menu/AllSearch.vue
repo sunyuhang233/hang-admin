@@ -25,7 +25,7 @@ async function toRouter(path?: string) {}
     :popper-class="getMenuList.length === 0 ? 'animate-tada overflow-hidden' : 'overflow-hidden'"
     class="search"
     placeholder="搜索功能/菜单/帮助 ✨"
-    @change="(url) => toRouter(url)">
+    @change="(url:string) => toRouter(url)">
     <template #prefix>
       <el-icon>
         <Search />
