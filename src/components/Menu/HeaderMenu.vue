@@ -25,6 +25,12 @@ const isShowSearch = ref<boolean>(false)
         >极物圈后台</strong
       >
       <!-- 搜索 -->
+      <div ml-4 flex items-center md:ml-16>
+        <AllSearch class="hidden md:block" />
+        <div class="block md:hidden">
+          <el-button icon="search" circle style="padding: 0.6em" @click="isShowSearch = !isShowSearch" />
+        </div>
+      </div>
     </div>
     <div class="right flex-row-c-c">
       <!-- 消息 -->
