@@ -7,4 +7,18 @@ export const routes: RouteRecordRaw[] = [
     name: 'login',
     component: () => import('@/views/LoginView.vue'),
   },
+  // 404
+  {
+    path: '/notfound:msg',
+    name: 'notfound',
+    component: () => import('@/views/NotFound.vue'),
+  },
+  // notfound
+  {
+    path: '/:pathMath(.*)*',
+    redirect: {
+      path: '/notfound:404',
+      replace: true,
+    },
+  },
 ]
