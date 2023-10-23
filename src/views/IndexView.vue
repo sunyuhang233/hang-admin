@@ -4,7 +4,10 @@
     <!-- 主内容 -->
     <div grid="~ cols-1 gap-8 items-start" lg:grid="~ cols-[4fr_2fr]  gap-8 " mb-4 class="content">
       <!-- 左侧 -->
-      <div class="left" grid="~ cols-1 gap-8"></div>
+      <div class="left" grid="~ cols-1 gap-8">
+         <!-- 订单数 -->
+            <OrderTotal class="box-content" />
+      </div>
       <!-- 右侧 -->
       <div grid="~ cols-1 gap-8 " class="right"></div>
     </div>

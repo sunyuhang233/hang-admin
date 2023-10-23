@@ -12,23 +12,18 @@ declare module '@vue/runtime-core' {
     AllSearch: typeof import('./components/Menu/AllSearch.vue')['default']
     BellBtn: typeof import('./components/btn/BellBtn.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
-    ElForm: typeof import('element-plus/es')['ElForm']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
-    ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     HeaderMenu: typeof import('./components/Menu/HeaderMenu.vue')['default']
     LeftMenu: typeof import('./components/Menu/LeftMenu.vue')['default']
     LoginForm: typeof import('./components/main/Login/LoginForm.vue')['default']
+    OrderTotal: typeof import('./components/main/Home/OrderTotal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitch: typeof import('./components/btn/ThemeSwitch.vue')['default']
     WelcomeCard: typeof import('./components/card/WelcomeCard.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
