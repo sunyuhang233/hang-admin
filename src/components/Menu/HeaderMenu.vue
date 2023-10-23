@@ -28,8 +28,11 @@ const isShowSearch = ref<boolean>(false)
     </div>
     <div class="right flex-row-c-c">
       <!-- 消息 -->
-      <BellBtn/>
+      <BellBtn />
       <!-- 退出登录 -->
+      <el-button round style="padding: 0.5em">
+        <i i-solar:power-bold p-0.5em />
+      </el-button>
       <!-- 夜间 -->
       <ThemeSwitch />
       <!-- 用户头像 -->
