@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AllSearch: typeof import('./components/Menu/AllSearch.vue')['default']
     BellBtn: typeof import('./components/btn/BellBtn.vue')['default']
     BillsTable: typeof import('./components/main/Home/BillsTable.vue')['default']
+    CopyText: typeof import('./components/btn/CopyText.vue')['default']
     DesTotal: typeof import('./components/main/Home/DesTotal.vue')['default']
     DeviceMenu: typeof import('./components/main/Home/DeviceMenu.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
