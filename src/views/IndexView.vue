@@ -10,6 +10,9 @@
         <OrderTotal class="box-content" />
         <!-- 数据统计本月 -->
         <DesTotal class="box-content" />
+        <!-- 热卖商品 -->
+        <HotGoodsList class="box-content" />
+        <div grid="~ md:cols-2 gap-8" />
       </div>
       <!-- 右侧 -->
       <div grid="~ cols-1 gap-8 " class="right">
