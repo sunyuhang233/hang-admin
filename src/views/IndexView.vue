@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <div flex flex-col class="tracking-0.1em">
     <WelcomeCard />
@@ -9,12 +10,13 @@
         <OrderTotal class="box-content" />
       </div>
       <!-- 右侧 -->
-      <div grid="~ cols-1 gap-8 " class="right">1213</div>
+      <div grid="~ cols-1 gap-8 " class="right">
+         <!-- 信息菜单 -->
+        <MenuSwiper class="w-full" />
+      </div>
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .box-content {
