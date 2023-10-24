@@ -8,11 +8,14 @@
       <div class="left" grid="~ cols-1 gap-8">
         <!-- 订单数 -->
         <OrderTotal class="box-content" />
+        <!-- 数据统计本月 -->
+        <DesTotal class="box-content" />
       </div>
       <!-- 右侧 -->
       <div grid="~ cols-1 gap-8 " class="right">
         <!-- 信息菜单 -->
         <MenuSwiper class="w-full" />
+
         <!-- 订单统计 账单 -->
         <BillsTable class="box-content" />
         <OrdersTable class="box-content" />

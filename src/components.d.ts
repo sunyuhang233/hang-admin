@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AllSearch: typeof import('./components/Menu/AllSearch.vue')['default']
     BellBtn: typeof import('./components/btn/BellBtn.vue')['default']
     BillsTable: typeof import('./components/main/Home/BillsTable.vue')['default']
+    DesTotal: typeof import('./components/main/Home/DesTotal.vue')['default']
     DeviceMenu: typeof import('./components/main/Home/DeviceMenu.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
@@ -22,6 +23,7 @@ declare module '@vue/runtime-core' {
     ElProgress: typeof import('element-plus/es')['ElProgress']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     FoldSwiper: typeof import('./components/card/FoldSwiper.vue')['default']
     HeaderMenu: typeof import('./components/Menu/HeaderMenu.vue')['default']
     LeftMenu: typeof import('./components/Menu/LeftMenu.vue')['default']
@@ -33,6 +35,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SmallSelect: typeof import('./components/btn/SmallSelect.vue')['default']
     ThemeSwitch: typeof import('./components/btn/ThemeSwitch.vue')['default']
+    TotalProgress: typeof import('./components/main/Home/TotalProgress.vue')['default']
     WelcomeCard: typeof import('./components/card/WelcomeCard.vue')['default']
   }
   export interface ComponentCustomProperties {
