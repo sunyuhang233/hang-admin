@@ -15,6 +15,7 @@
         <MenuSwiper class="w-full" />
         <!-- 订单统计 账单 -->
         <BillsTable class="box-content" />
+        <OrdersTable class="box-content" />
       </div>
     </div>
   </div>

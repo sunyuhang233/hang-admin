@@ -27,9 +27,11 @@ declare module '@vue/runtime-core' {
     LeftMenu: typeof import('./components/Menu/LeftMenu.vue')['default']
     LoginForm: typeof import('./components/main/Login/LoginForm.vue')['default']
     MenuSwiper: typeof import('./components/main/Home/MenuSwiper.vue')['default']
+    OrdersTable: typeof import('./components/main/Home/OrdersTable.vue')['default']
     OrderTotal: typeof import('./components/main/Home/OrderTotal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SmallSelect: typeof import('./components/btn/SmallSelect.vue')['default']
     ThemeSwitch: typeof import('./components/btn/ThemeSwitch.vue')['default']
     WelcomeCard: typeof import('./components/card/WelcomeCard.vue')['default']
   }
