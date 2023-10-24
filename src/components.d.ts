@@ -11,8 +11,10 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AllSearch: typeof import('./components/Menu/AllSearch.vue')['default']
     BellBtn: typeof import('./components/btn/BellBtn.vue')['default']
+    BillsTable: typeof import('./components/main/Home/BillsTable.vue')['default']
     DeviceMenu: typeof import('./components/main/Home/DeviceMenu.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
     ElOption: typeof import('element-plus/es')['ElOption']
@@ -30,5 +32,8 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitch: typeof import('./components/btn/ThemeSwitch.vue')['default']
     WelcomeCard: typeof import('./components/card/WelcomeCard.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

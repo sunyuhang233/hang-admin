@@ -11,8 +11,10 @@
       </div>
       <!-- 右侧 -->
       <div grid="~ cols-1 gap-8 " class="right">
-         <!-- 信息菜单 -->
+        <!-- 信息菜单 -->
         <MenuSwiper class="w-full" />
+        <!-- 订单统计 账单 -->
+        <BillsTable class="box-content" />
       </div>
     </div>
   </div>
