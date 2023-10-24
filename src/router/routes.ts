@@ -19,6 +19,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
           first: true,
         },
       },
+      {
+        path: 'sys',
+        name: 'sys',
+        component: () => import('@/views/sys/IndexView.vue'),
+        meta: {
+          url: '/sys',
+          title: '系统',
+          icon: 'i-solar:laptop-outline',
+          onIcon: 'i-solar:laptop-bold',
+        },
+      },
     ],
   },
 ]

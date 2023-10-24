@@ -13,6 +13,7 @@ export const copying = {
       async (e: Event) => {
         e.stopPropagation()
         const res = await useAsyncCopyText(binding.value || el.innerHTML)
+        // 这个位置 就是写 v-v-copying 后面的参数
         if (res && binding.modifiers.toast) {
           ElMessage.success({
             message: '成功复制到剪切板!!!',

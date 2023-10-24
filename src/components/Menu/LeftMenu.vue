@@ -30,6 +30,12 @@ const asyncRoutes = [
     },
   },
   {
+    path: '/sys',
+    name: '系统',
+    icon: 'i-solar:laptop-outline',
+    onIcon: 'i-solar:laptop-bold',
+  },
+  {
     name: '系统',
     icon: 'i-solar:laptop-outline',
     onIcon: 'i-solar:laptop-bold',
