@@ -43,6 +43,7 @@ declare module '@vue/runtime-core' {
     OrderTotal: typeof import('./components/main/Home/OrderTotal.vue')['default']
     PermissionManager: typeof import('./components/main/Sys/PermissionManager.vue')['default']
     RedisManager: typeof import('./components/main/Sys/RedisManager.vue')['default']
+    ReloadBtn: typeof import('./components/btn/ReloadBtn.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmallSelect: typeof import('./components/btn/SmallSelect.vue')['default']
