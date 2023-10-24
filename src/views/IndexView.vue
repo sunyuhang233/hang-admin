@@ -2,7 +2,6 @@
 <template>
   <div flex flex-col class="tracking-0.1em">
     <WelcomeCard />
-    <el-button type="primary" size="default">剪切</el-button>
 
     <!-- 主内容 -->
     <div grid="~ cols-1 gap-8 items-start" lg:grid="~ cols-[4fr_2fr]  gap-8 " mb-4 class="content">
