@@ -30,6 +30,28 @@ export const asyncRoutes: RouteRecordRaw[] = [
           onIcon: 'i-solar:laptop-bold',
         },
       },
+      /** ------------------ 用户管理 ---------------- */
+      {
+        path: 'user',
+        meta: {
+          title: '用户',
+          icon: 'i-solar:shield-user-broken',
+          onIcon: 'i-solar:bill-list-bold-duotone',
+        },
+        children: [
+          {
+            path: 'info',
+            name: 'userInfo',
+            component: () => import('@/views/user/InfoView.vue'),
+            meta: {
+              url: '/user/info',
+              title: '用户列表',
+              icon: 'i-solar:user-broken',
+              onIcon: 'i-solar:user-bold',
+            },
+          },
+        ],
+      },
     ],
   },
 ]
