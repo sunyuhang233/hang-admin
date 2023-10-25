@@ -4,6 +4,7 @@ import type { CascaderProps } from 'element-plus'
 import { compareObjects } from '@/utils'
 
 import TableLayout from '@/layouts/TableLayout.vue'
+import { exportExcel } from '@/utils/elsx';
 enum Gender {
   BOY = '男',
   GIRL = '女',
@@ -509,7 +510,35 @@ function onSubmitRoleBind(userId: string, ids: string[]) {
 /**
  * 导出表格
  */
-function onExportExcel() {}
+function onExportExcel() {
+  ElMessageBox.confirm('确认导出表格？', '提醒', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'info',
+    center: true,
+    callback(res: string) {
+      if (res === 'confirm') {
+        const rawData = selectList.value.length > 0 ? selectList.value : (pageInfo.value.records as any)
+        if (rawData.length === 0) return ElMessage.error('没有选中导出的数据！')
+        exportExcel<any>(
+          rawData,
+          ['id', 'name', 'parentId', 'code', 'intro', 'updateTime', 'createTime'],
+          {
+            id: '用户ID',
+            name: '用户名称',
+            creator: '创建者',
+            parentId: '父ID',
+            intro: '备注',
+            code: '用户码CODE',
+            updateTime: '更新时间',
+            createTime: '创建时间',
+          },
+          { filename: `用户列表-第${page.value}页-${useDateFormat(new Date(), 'YYYY-MM-DD').value}.xlsx` },
+        )
+      }
+    },
+  })
+}
 /**
  * 重置筛选
  */
