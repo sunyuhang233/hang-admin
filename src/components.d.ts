@@ -47,6 +47,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmallSelect: typeof import('./components/btn/SmallSelect.vue')['default']
+    TableDefaultBtns: typeof import('./components/btn/TableDefaultBtns.vue')['default']
     ThemeSwitch: typeof import('./components/btn/ThemeSwitch.vue')['default']
     TotalProgress: typeof import('./components/main/Home/TotalProgress.vue')['default']
     WelcomeCard: typeof import('./components/card/WelcomeCard.vue')['default']
