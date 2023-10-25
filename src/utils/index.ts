@@ -46,3 +46,21 @@ export function useAsyncCopyText(text: string): Promise<boolean> {
     })
   }
 }
+
+/**
+ * 比对对象生成(表层级)
+ * @param oldObj
+ * @param newObj
+ * @returns
+ */
+export function compareObjects<T extends object>(oldObj: T, newObj: T) {
+  const updatedObj = {}
+  // 遍历newObj的属性
+  for (const key in newObj) {
+    // 检查newObj是否有该属性，并且其值与oldObj中的值不相等
+    if (Object.prototype.hasOwnProperty.call(newObj, key) && newObj[key] !== oldObj[key])
+      // @ts-expect-error
+      updatedObj[key] = newObj[key] // 将更改的参数添加到updatedObj中
+  }
+  return updatedObj as T
+}

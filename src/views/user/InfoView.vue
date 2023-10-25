@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDateFormat } from '@vueuse/core'
 import TableLayout from '@/layouts/TableLayout.vue'
+import { compareObjects } from '@/utils'
 interface UserVO {
   id?: string
   avatar?: string
@@ -356,6 +357,17 @@ const formRules = reactive({
 let formData = reactive({})
 
 /**
+ * 表单是否更新 当前行和表单数据进行比较
+ */
+const isUpdate = computed(() => {
+  if (rowInfo.value) {
+    return Object.keys(compareObjects(rowInfo.value, formData as any)).length > 0
+  } else {
+    return false
+  }
+})
+
+/**
  * 某行数据
  */
 const rowInfo = ref<any>()
@@ -535,6 +547,9 @@ const preview = (row: any) => {
   }
 }
 
+/**
+ * 清空表单
+ */
 const clearForm = () => {
   formData = {
     id: undefined,
@@ -548,7 +563,9 @@ const clearForm = () => {
   }
 }
 
-const save = () => {}
+const checkForm = () => {
+  
+}
 </script>
 
 <template>
@@ -829,8 +846,8 @@ const save = () => {}
       </div>
       <template #footer>
         <el-button type="danger" plain @click="isShowForm = false && clearForm()">关闭</el-button>
-        <el-button v-if="!isEdit && !formData?.id" type="info" plain @click="save">添加</el-button>
-        <el-button :disabled="isEdit" v-else type="info" plain @click="save">保存修改</el-button>
+        <el-button v-if="!isEdit && !formData?.id" type="info" plain @click="checkForm">添加</el-button>
+        <el-button :disabled="isEdit && !isUpdate" v-else type="info" plain @click="checkForm">保存修改</el-button>
       </template>
     </el-dialog>
   </div>
