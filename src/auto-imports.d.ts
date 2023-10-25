@@ -5,9 +5,9 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
-  const ElMess: typeof import('element-plus/es')['ElMess']
   const ElMessage: typeof import('element-plus/es')['ElMessage']
   const ElMessageBox: typeof import('element-plus/es')['ElMessageBox']
+  const ElNotification: typeof import('element-plus/es')['ElNotification']
   const colors: typeof import('./plugins/echart')['colors']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
