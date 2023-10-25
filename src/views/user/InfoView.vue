@@ -100,6 +100,216 @@ const dataList = ref<UserVO[]>([
     updateTime: '2021-02-15 16:00:00',
     username: 'zhangsan',
   },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
+  {
+    id: '5',
+    birthday: '1990-01-01',
+    createTime: '2021-02-15 16:00:00',
+    email: '123@qq.com',
+    gender: '男',
+    isEmailVerified: 1,
+    isPhoneVerified: 1,
+    lastLoginTime: '2021-02-15 16:00:00',
+    nickname: '张三',
+    phone: '13888888888',
+    status: 1,
+    updateTime: '2021-02-15 16:00:00',
+    username: 'zhangsan',
+  },
 ])
 
 const updateTime = ref(useDateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss').value)
@@ -109,6 +319,12 @@ const isLoading = ref(false)
 const isEdit = ref(false)
 
 const userId = ref('123')
+
+const pageInfo = reactive({
+  pageNo: 1,
+  pageSize: 10,
+  total: 100,
+})
 
 const beforeChange = async (id: string, toggle: number, alertText: string, callback?: () => void) => {
   if (!id || toggle === undefined) {
@@ -131,13 +347,145 @@ const beforeChange = async (id: string, toggle: number, alertText: string, callb
     return false
   }
 }
+
+interface MenuButtonType {
+  title: string
+  icon?: string | object | Array<string | object>
+  type?: '' | 'default' | 'info' | 'text' | 'success' | 'warning' | 'primary' | 'danger'
+  plain?: boolean
+  show?: boolean
+  methods?: () => any
+}
+
+const reload = () => {
+  window.location.reload()
+}
+const exportUser = () => {
+  console.log('导出')
+}
+
+const onShowInfoDetail = () => {
+  isEdit.value = true
+}
+
+const selectList = ref([])
+
+const menuList = ref<MenuButtonType[]>([
+  {
+    show: true,
+    title: '导出',
+    icon: 'i-solar:printer-outline',
+    type: 'default',
+    plain: false,
+    methods: exportUser,
+  },
+  { show: true, title: '刷新', icon: 'i-solar:refresh-outline', type: 'info', methods: reload },
+  {
+    show: true,
+    plain: false,
+    title: '添加',
+    methods: onShowInfoDetail,
+    icon: 'i-solar:user-bold-duotone mr-2',
+    type: 'info',
+  },
+])
+
+// 查询参数
+const isShowSearch = ref<boolean>(true)
+const searchDTO = ref({
+  createTimeSort: undefined,
+  isCustomer: undefined,
+  keyWord: undefined,
+  status: undefined,
+  userId: undefined,
+})
+
+const loadData = () => {}
+
+watch(
+  [searchDTO, pageInfo],
+  () => {
+    loadData()
+  },
+  { immediate: true },
+)
+
+const resetDto = () => {
+  searchDTO.value = {
+    createTimeSort: undefined,
+    isCustomer: undefined,
+    keyWord: undefined,
+    status: undefined,
+    userId: undefined,
+  }
+  loadData()
+}
 </script>
 
 <template>
   <div>
     <TableLayout :header="{ title: `用户管理`, updateTime }">
       <!-- 菜单 -->
-      <template #menu>123</template>
+      <template #menu>
+        <div
+          mr-4
+          :class="!isShowSearch ? 'scale-x-90  opacity-0' : ' scale-x-100 opacity-100'"
+          class="flex-shrink-0 transform-origin-left-center overflow-hidden transition-300 transition-all"
+          flex="~ gap-2 md:gap-4 items-center">
+          <small class="sticky left-0 flex-shrink-0 opacity-60">筛选:</small>
+          <!-- 用户名 -->
+          <el-input
+            v-model="searchDTO.keyWord"
+            placeholder="用户名 (Enter)"
+            prefix-icon="Search"
+            class="w-auto"
+            label="用户名"
+            :disabled="isLoading"
+            @keyup.enter="loadData" />
+          <!-- 注册排序 -->
+          <el-checkbox v-model="searchDTO.createTimeSort" :true-label="1" :false-label="0" border @change="loadData">
+            <i i-solar:sort-by-time-bold-duotone mr-2 p-0.5em />
+            <span v-show="searchDTO.createTimeSort === undefined">注册排序</span>
+            <span v-show="searchDTO.createTimeSort !== undefined">
+              {{ searchDTO.createTimeSort ? ' 时间降序' : '时间升序' }}
+            </span>
+          </el-checkbox>
+
+          <!-- 是否禁用 -->
+          <el-checkbox
+            v-model="searchDTO.status"
+            :true-label="1"
+            :false-label="0"
+            border
+            class="card-default"
+            @change="loadData"
+            :indeterminate="searchDTO.status === undefined">
+            <i i-solar:user-block-bold-duotone mr-2 p-0.5em />
+            <span v-show="searchDTO.status === undefined">是否禁用</span>
+            <span v-show="searchDTO.status !== undefined">
+              {{ searchDTO.status ? ' 禁用' : '正常' }}
+            </span>
+          </el-checkbox>
+          <!-- 全部人员 -->
+          <el-checkbox
+            v-model="searchDTO.isCustomer"
+            :indeterminate="searchDTO.isCustomer === undefined"
+            border
+            class="card-default"
+            :true-label="1"
+            :false-label="0"
+            @change="loadData">
+            <i i-solar:user-bold-duotone mr-2 p-0.5em />
+            <span v-show="searchDTO.isCustomer === undefined">全部人员</span>
+            <span v-show="searchDTO.isCustomer !== undefined">
+              {{ searchDTO.isCustomer ? '前台人员' : '后台人员' }}
+            </span>
+          </el-checkbox>
+          <!-- 重置 -->
+          <el-button type="danger" plain @click="resetDto">重置</el-button>
+        </div>
+        <div class="ml-a flex"><TableDefaultBtns :menu="menuList" /></div>
+      </template>
       <!-- 表格 -->
       <template #default>
         <el-table
@@ -214,6 +562,17 @@ const beforeChange = async (id: string, toggle: number, alertText: string, callb
           <!-- 创建时间 -->
           <el-table-column column-key="createTime" prop="createTime" label="创建时间" sortable min-width="180%" />
         </el-table>
+      </template>
+      <template #footer>
+        <el-pagination
+          v-model:current-page="pageInfo.pageNo"
+          background
+          layout="prev, pager, next"
+          :page-count="pageInfo.total" />
+        <small
+          >共<strong class="text-1rem text-[var(--el-color-primary)]">{{ pageInfo.total }}</strong
+          >个用户</small
+        >
       </template>
     </TableLayout>
   </div>

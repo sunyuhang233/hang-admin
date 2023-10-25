@@ -31,7 +31,9 @@ const menuList = computed(() => props.menu.filter((item) => item.show))
     class="group ml-12px w-full tracking-0.2em transition-300 md:ml-0 md:w-auto"
     :plain="p.plain !== undefined ? p.plain : true"
     :type="p.type"
-    @click="() => p.methods && p.methods()"></el-button>
+    @click="() => p.methods && p.methods()"
+    >{{ p.title }}</el-button
+  >
 </template>
 
 <style scoped></style>
