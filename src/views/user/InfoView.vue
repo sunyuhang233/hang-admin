@@ -2,13 +2,12 @@
 import { useDateFormat } from '@vueuse/core'
 import type { CascaderProps } from 'element-plus'
 import { compareObjects } from '@/utils'
-import { getUserSex } from '@/utils/methods'
 import TableLayout from '@/layouts/TableLayout.vue'
 import { exportExcel } from '@/utils/elsx'
-import { changeUserStatus, getUserPage, insertUser } from '@/api/user/user'
+import { changeUserStatus, getUserPage, insertUser, updateUserInfo } from '@/api/user/user'
 import { StatusCode } from '@/types'
 import { Gender } from '@/types/common'
-import type { InsertAdminUserDTO } from '@/types/user/user'
+import type { InsertAdminUserDTO, UpdateUserDTO } from '@/types/user/user'
 const user = ref({
   userInfo: {
     id: '123',
@@ -137,11 +136,7 @@ watch(
  * @param data 传递的数据
  * @param rawData 当前行
  */
-async function onSubmit(
-  type: 'insert' | 'update' | 'delete' | 'logout' | 'batchDel',
-  data: string | string[] | any,
-  rawData = theRowInfo.value!,
-) {
+async function onSubmit(type: 'insert' | 'update' | 'delete' | 'logout' | 'batchDel', data: string | string[] | any) {
   const tip = {
     class: 'el-button--primary',
     title: '操作',
@@ -177,10 +172,11 @@ async function onSubmit(
         // 新增
         if (type === 'insert') {
           res = await insertUser(form.value as InsertAdminUserDTO)
-
           // 修改
         } else if (type === 'update') {
-          if (!rawData) return
+          if (!form.value) return
+          res = await updateUserInfo(form.value.id, form.value)
+
           // 下线
         } else if (type === 'logout') {
           ElMessage.success('强制下线成功！')
@@ -303,13 +299,10 @@ function clearForm(call?: () => void) {
  * @param row table选中的行
  */
 function onShowInfoDetail(row?: any, call?: () => any) {
-  console.log('row', row)
-
   if (row) {
     form.value = {
       ...row,
     }
-    console.log(form.value)
 
     if (row?.avatar && row?.avatar !== 'default.png') {
       avatarList.value = [
@@ -655,7 +648,7 @@ function resetSearchOption() {
                   :plain="false"
                   style="padding: 0rem 0.6rem"
                   border-default
-                  @click="onSubmit('logout', row, row)">
+                  @click="onSubmit('logout', row)">
                   <i i-solar:archive-down-minimlistic-bold-duotone mr-1 p-0.5em />
                   下线
                 </el-button>

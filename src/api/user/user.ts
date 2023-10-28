@@ -1,4 +1,4 @@
-import type { InsertAdminUserDTO, SelectUserInfoPageDTO, UserVO } from '@/types/user/user'
+import type { InsertAdminUserDTO, SelectUserInfoPageDTO, UpdateUserDTO, UserVO } from '@/types/user/user'
 import { useHttp } from '..'
 import type { IPage, Result } from '@/types'
 
@@ -31,6 +31,17 @@ export function getUserById(userId: number) {
   return useHttp.post<Result<UserVO>>(`/user-service/admin/user/get/${userId}`)
 }
 
-export function insertUser(user: InsertAdminUserDTO) { 
-    return useHttp.post<Result<null>>(`/user-service/admin/user/insert`, user)
+/**
+ *  新增后台用户
+ * @param user 新增用户vo
+ * @returns
+ */
+export function insertUser(user: InsertAdminUserDTO) {
+  return useHttp.post<Result<null>>(`/user-service/admin/user/insert`, user)
+}
+
+export function updateUserInfo(userId: number, dto: UpdateUserDTO) {
+  return useHttp.put<Result<null>>(`/user-service/admin/user/update/${userId}`, {
+    ...dto,
+  })
 }

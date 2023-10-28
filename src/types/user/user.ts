@@ -101,3 +101,33 @@ export interface InsertAdminUserDTO {
    */
   username: string
 }
+export interface UpdateUserDTO {
+  /**
+   * 生日
+   */
+  birthday?: string
+  /**
+   * 创建日期
+   */
+  createTime?: string
+  /**
+   * 性别（男|女|保密）
+   */
+  gender?: Gender
+  /**
+   * 昵称
+   */
+  nickname?: string
+  /**
+   * 状态（0|1）
+   */
+  status?: number
+  /**
+   * 用户名
+   */
+  username?: string
+  /**
+   * 状态（0|1）0前台 1后台
+   */
+  userType?: number
+}
