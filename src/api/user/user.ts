@@ -18,6 +18,6 @@ export function getUserPage(pageNo: number, pageSize: number, dto: SelectUserInf
  * @param changeUserStatusDTO 用户切换实体
  * @returns
  */
-export function changeUserStatus(changeUserStatusDTO: { type: number; userId: number }) {
-  return useHttp.post<Result<null>>('/user-service/admin/user/changeStatus', changeUserStatusDTO)
+export function changeUserStatus(type: number, userId: number) {
+  return useHttp.post<Result<null>>(`/user-service/admin/user/changeStatus?type=${type}&userId=${userId}`)
 }

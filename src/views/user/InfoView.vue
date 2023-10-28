@@ -2,10 +2,10 @@
 import { useDateFormat } from '@vueuse/core'
 import type { CascaderProps } from 'element-plus'
 import { compareObjects } from '@/utils'
-
+import { getUserSex } from '@/utils/methods'
 import TableLayout from '@/layouts/TableLayout.vue'
 import { exportExcel } from '@/utils/elsx'
-import { getUserPage } from '@/api/user/user'
+import { changeUserStatus, getUserPage } from '@/api/user/user'
 import { StatusCode } from '@/types'
 enum Gender {
   BOY = '男',
@@ -240,9 +240,17 @@ async function onToggleChange(id: string, toggle: number, alertText: string, cal
     center: true,
   })
   if (data === 'confirm') {
-    ElMessage.success(`${alertText}成功！`)
-    callback && callback()
-    return true
+    const type = toggle === 1 ? 0 : 1
+
+    const res = await changeUserStatus(type, +id)
+    if (res.data.code === StatusCode.SUCCESS) {
+      ElMessage.success(`${alertText}成功！`)
+      callback && callback()
+      return true
+    } else {
+      ElMessage.error(res.data.msg)
+      return false
+    }
   } else {
     return false
   }
@@ -558,7 +566,11 @@ function resetSearchOption() {
           <!-- 用户名 -->
           <el-table-column column-key="username" prop="username" show-overflow-tooltip width="100%" label="用户名" />
           <!-- 性别 -->
-          <el-table-column column-key="gender" prop="gender" width="100%" show-overflow-tooltip label="性别" />
+          <el-table-column column-key="gender" prop="gender" width="100%" show-overflow-tooltip label="性别">
+            <template #default="{ row }">
+              <span>{{ getUserSex(row.gender) }}</span></template
+            >
+          </el-table-column>
           <!-- 用户头像 -->
           <el-table-column column-key="name" prop="name" width="100%" label="用户头像">
             <template #default="{ row }">

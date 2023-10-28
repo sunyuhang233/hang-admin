@@ -1,7 +1,8 @@
 import { userExit } from '@/api/auth'
 import router from '@/router'
-import { Gender, StatusCode, UserStatus } from '@/types'
+import { StatusCode, UserStatus } from '@/types'
 import type { UserInfoVO } from '@/types/auth'
+import { Gender } from '@/types/common'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(

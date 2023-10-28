@@ -1,4 +1,5 @@
-import type { Gender, UserStatus } from "."
+import type { UserStatus } from '.'
+import type { Gender } from './common'
 
 export interface UserInfoVO {
   id: string
