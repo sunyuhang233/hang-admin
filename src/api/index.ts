@@ -1,24 +1,9 @@
 import axios from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import router from '@/router'
-enum StatusCode {
-  SUCCESS = 20000,
-  INSERT_ERR = 20001,
-  DELETE_ERR = 20002,
-  SELECT_ERR = 20003,
-  UPDATE_ERR = 20004,
-  LINK_NULL_ERR = 20005,
-  NULL_ERR = 40001,
-  TOKEN_ERR = 40002,
-  PARAM_ERR = 40003,
-  BUSY_ERR = 40004,
-  DEFAULT_ERR = 40005,
-  PERMISSION_ERR = 40006,
-  TOKEN_EXPIRED_ERR = 40007,
-}
+import { StatusCode } from '@/types'
 
-
-export const BaseUrl = 'http://localhost:9090/'
+export const BaseUrl = '/api'
 // 图片
 export const BaseUrlImg = `${BaseUrl}/res/`
 export const BaseUrlVideo = `${BaseUrl}/res/`
@@ -45,37 +30,14 @@ useHttp.interceptors.response.use(
     let msg = ''
     const type = 'error'
     switch (data.code) {
-      case StatusCode.INSERT_ERR:
-        msg = '错误，添加失败！'
+      case StatusCode.UNAUTHORIZED:
+        msg = '还未授权，不能访问'
         break
-      case StatusCode.DELETE_ERR:
-        msg = '该目标已不存在！'
+      case StatusCode.FORBIDDEN:
+        msg = '没有权限，禁止访问'
         break
-      case StatusCode.UPDATE_ERR:
-        msg = '错误，修改失败！'
-        break
-      case StatusCode.LINK_NULL_ERR:
-        msg = '关联的内容不存在！'
-        break
-      case StatusCode.NULL_ERR:
-        msg = '请求失败，空值错误！'
-        break
-      case StatusCode.TOKEN_ERR:
-        msg = '身份验证失败！'
-        router.push({ name: 'login' })
-        break
-      case StatusCode.TOKEN_EXPIRED_ERR:
-        msg = '身份过期，请重新请求！'
-        break
-      case StatusCode.PERMISSION_ERR:
-        msg = '抱歉，权限不足！'
-        break
-      case StatusCode.PARAM_ERR:
-        msg = '请求失败，参数错误！'
-        break
-      case StatusCode.BUSY_ERR:
-        msg = '服务器繁忙，请稍后重试！'
-        break
+      case StatusCode.INTERNAL_SERVER_ERROR:
+        msg = '服务器异常，请稍后再试'
     }
     if (msg !== '') {
       // 组件
