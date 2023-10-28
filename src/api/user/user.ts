@@ -1,4 +1,4 @@
-import type { SelectUserInfoPageDTO, UserVO } from '@/types/user/user'
+import type { InsertAdminUserDTO, SelectUserInfoPageDTO, UserVO } from '@/types/user/user'
 import { useHttp } from '..'
 import type { IPage, Result } from '@/types'
 
@@ -20,4 +20,17 @@ export function getUserPage(pageNo: number, pageSize: number, dto: SelectUserInf
  */
 export function changeUserStatus(type: number, userId: number) {
   return useHttp.post<Result<null>>(`/user-service/admin/user/changeStatus?type=${type}&userId=${userId}`)
+}
+
+/**
+ * 查询单个用户
+ * @param userId 用户id
+ * @returns
+ */
+export function getUserById(userId: number) {
+  return useHttp.post<Result<UserVO>>(`/user-service/admin/user/get/${userId}`)
+}
+
+export function insertUser(user: InsertAdminUserDTO) { 
+    return useHttp.post<Result<null>>(`/user-service/admin/user/insert`, user)
 }

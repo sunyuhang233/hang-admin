@@ -71,3 +71,33 @@ export interface UserVO {
    */
   username?: string
 }
+export interface InsertAdminUserDTO {
+  /**
+   * 头像
+   */
+  avatar?: string
+  /**
+   * 生日
+   */
+  birthday?: string
+  /**
+   * 性别（男|女|保密）
+   */
+  gender?: Gender | string
+  /**
+   * 昵称
+   */
+  nickname: string
+  /**
+   * 密码
+   */
+  password: string
+  /**
+   * 状态（0|1）
+   */
+  status?: number
+  /**
+   * 用户名|员工号
+   */
+  username: string
+}

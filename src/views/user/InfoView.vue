@@ -5,13 +5,10 @@ import { compareObjects } from '@/utils'
 import { getUserSex } from '@/utils/methods'
 import TableLayout from '@/layouts/TableLayout.vue'
 import { exportExcel } from '@/utils/elsx'
-import { changeUserStatus, getUserPage } from '@/api/user/user'
+import { changeUserStatus, getUserPage, insertUser } from '@/api/user/user'
 import { StatusCode } from '@/types'
-enum Gender {
-  BOY = '男',
-  GIRL = '女',
-  DEFAULT = '保密',
-}
+import { Gender } from '@/types/common'
+import type { InsertAdminUserDTO } from '@/types/user/user'
 const user = ref({
   userInfo: {
     id: '123',
@@ -57,7 +54,7 @@ const form = ref<any>({
   avatar: undefined,
   birthday: undefined,
   gender: undefined,
-  nickname: undefined,
+  realName: undefined,
   password: undefined,
 })
 // 验证规则
@@ -179,6 +176,8 @@ async function onSubmit(
         let res
         // 新增
         if (type === 'insert') {
+          res = await insertUser(form.value as InsertAdminUserDTO)
+
           // 修改
         } else if (type === 'update') {
           if (!rawData) return
@@ -198,16 +197,17 @@ async function onSubmit(
         }
         isLoading.value = false
         if (!res) return
-
-        isShowForm.value = false
-        if (type === 'insert' || type === 'update') loadData()
-        clearForm()
-        ElNotification({
-          title: `${tip.title}提示`,
-          message: `${tip.title}成功！`,
-          type: 'success',
-          duration: 2000,
-        })
+        if (res.data.code === StatusCode.SUCCESS) {
+          isShowForm.value = false
+          if (type === 'insert' || type === 'update') loadData()
+          clearForm()
+          ElNotification({
+            title: `${tip.title}提示`,
+            message: `${tip.title}成功！`,
+            type: 'success',
+            duration: 2000,
+          })
+        }
       } else {
         ElMessage.closeAll('error')
         ElMessage.error(`${tip.title}失败，请稍后再试！`)
@@ -303,10 +303,14 @@ function clearForm(call?: () => void) {
  * @param row table选中的行
  */
 function onShowInfoDetail(row?: any, call?: () => any) {
+  console.log('row', row)
+
   if (row) {
     form.value = {
       ...row,
     }
+    console.log(form.value)
+
     if (row?.avatar && row?.avatar !== 'default.png') {
       avatarList.value = [
         {
@@ -566,11 +570,8 @@ function resetSearchOption() {
           <!-- 用户名 -->
           <el-table-column column-key="username" prop="username" show-overflow-tooltip width="100%" label="用户名" />
           <!-- 性别 -->
-          <el-table-column column-key="gender" prop="gender" width="100%" show-overflow-tooltip label="性别">
-            <template #default="{ row }">
-              <span>{{ getUserSex(row.gender) }}</span></template
-            >
-          </el-table-column>
+          <el-table-column column-key="gender" prop="gender" width="100%" show-overflow-tooltip label="性别" />
+
           <!-- 用户头像 -->
           <el-table-column column-key="name" prop="name" width="100%" label="用户头像">
             <template #default="{ row }">
@@ -596,7 +597,7 @@ function resetSearchOption() {
           <el-table-column label="用户类别" column-key="userType" prop="userType" width="100%">
             <template #default="{ row }">
               <el-tag :type="row?.userType ? 'warning' : 'info'">
-                {{ row?.userType ? '后台用户' : '前台用户' }}
+                {{ row?.userType == 0 ? '后台用户' : '前台用户' }}
               </el-tag>
             </template>
           </el-table-column>
@@ -723,20 +724,20 @@ function resetSearchOption() {
             <CopyText :text="form.id" />
           </el-form-item>
           <!-- 昵称 -->
-          <el-form-item prop="nickname" label="昵称">
-            <el-input v-model="form.nickname" placeholder="请填写用户昵称（1-40字符）" />
+          <el-form-item prop="realName" label="昵称">
+            <el-input v-model="form.realName" placeholder="请填写用户昵称（1-40字符）" />
           </el-form-item>
           <!-- 用户名 -->
           <el-form-item prop="username" label="用户名">
             <el-input v-model="form.username" placeholder="请填写用户名（6-30字符）" />
           </el-form-item>
           <!-- 密码 -->
-          <el-form-item v-if="isEdit && form.password" prop="password" label="密码">
-            <el-input v-model="form.password" placeholder="请填写用户密码（1-20字符）" />
+          <el-form-item v-if="!form?.id" prop="password" label="密码">
+            <el-input type="password" v-model="form.password" placeholder="请填写用户密码（1-20字符）" />
           </el-form-item>
           <!-- 性别 -->
           <el-form-item prop="gender" label="性别">
-            <el-radio-group v-if="form.gender" v-model="form.gender" fit="var(-el-color-primary)">
+            <el-radio-group v-model="form.gender" fit="var(-el-color-primary)">
               <el-radio-button v-for="(p, i) in [Gender.DEFAULT, Gender.BOY, Gender.GIRL]" :key="i" :label="p" border />
             </el-radio-group>
           </el-form-item>
@@ -762,14 +763,10 @@ function resetSearchOption() {
       </div>
       <template #footer>
         <el-button type="danger" plain @click="isShowForm = false && clearForm()"> 关闭 </el-button>
-        <el-button v-if="!isEdit && !form?.id" type="info" @click="checkForm(onSubmit.bind(null, 'insert', form))">
+        <el-button v-if="!form?.id" type="info" @click="checkForm(onSubmit.bind(null, 'insert', form))">
           添加
         </el-button>
-        <el-button
-          v-else
-          type="info"
-          :disabled="isEdit && !isUpdate"
-          @click="checkForm(onSubmit.bind(null, 'update', form))">
+        <el-button v-else type="info" :disabled="!isEdit" @click="checkForm(onSubmit.bind(null, 'update', form))">
           保存修改
         </el-button>
       </template>

@@ -18,7 +18,7 @@ export const useUserStore = defineStore(
       email: '',
       phone: '',
       nickname: '',
-      gender: Gender.MALE,
+      gender: Gender.BOY,
       avatar: '',
       birthday: '',
       createTime: '',

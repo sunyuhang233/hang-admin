@@ -1,8 +1,8 @@
 // 性别
 export enum Gender {
-  MALE = '男',
-  FEMALE = '女',
-  UNKNOWN = '保密',
+  BOY = '男',
+  GIRL = '女',
+  DEFAULT = '保密',
 }
 
 export enum Status {
