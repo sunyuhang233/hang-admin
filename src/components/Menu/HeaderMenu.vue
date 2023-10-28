@@ -1,5 +1,11 @@
 <script lang="ts" setup>
+import { useUserStore } from '@/stores/user'
+
+const user = useUserStore()
 const isShowSearch = ref<boolean>(false)
+const exit = () => {
+  user.exitLogin()
+}
 </script>
 
 <template>
@@ -36,7 +42,7 @@ const isShowSearch = ref<boolean>(false)
       <!-- 消息 -->
       <BellBtn />
       <!-- 退出登录 -->
-      <el-button round style="padding: 0.5em">
+      <el-button round style="padding: 0.5em" @click="exit">
         <i i-solar:power-bold p-0.5em />
       </el-button>
       <!-- 夜间 -->

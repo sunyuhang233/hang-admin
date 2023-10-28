@@ -1,5 +1,6 @@
+import { userExit } from '@/api/auth'
 import router from '@/router'
-import { Gender, UserStatus } from '@/types'
+import { Gender, StatusCode, UserStatus } from '@/types'
 import type { UserInfoVO } from '@/types/auth'
 import { defineStore } from 'pinia'
 
@@ -48,6 +49,28 @@ export const useUserStore = defineStore(
         return ''
       }
     })
+
+    const exitLogin = () => {
+      ElMessageBox.confirm('是否确认退出登录？', '退出登录', {
+        confirmButtonText: '确认退出',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(async () => {
+          // 退出登录
+          const { data } = await userExit()
+          if (data.code === StatusCode.SUCCESS) {
+            clearData()
+            ElNotification.success({
+              title: '退出成功！',
+            })
+          } else {
+            ElMessage.error('退出失败，请稍后重试！')
+          }
+        })
+        .catch(() => {})
+    }
+
     return {
       onLogin,
       token,
@@ -55,6 +78,7 @@ export const useUserStore = defineStore(
       getToken,
       clearData,
       isLogin,
+      exitLogin,
     }
   },
   {
