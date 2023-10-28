@@ -22,3 +22,15 @@ export enum StatusCode {
   FORBIDDEN = 403,
   INTERNAL_SERVER_ERROR = 500,
 }
+// 性别
+export enum Gender {
+  MALE = '男',
+  FEMALE = '女',
+  UNKNOWN = '保密',
+}
+
+// 状态
+export enum UserStatus {
+  ENABLE = '启用',
+  UNABLE = '禁用',
+}

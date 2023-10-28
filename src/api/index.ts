@@ -2,6 +2,7 @@ import axios from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import router from '@/router'
 import { StatusCode } from '@/types'
+import { useUserStore } from '@/stores/user'
 
 export const BaseUrl = '/api'
 // 图片
@@ -16,6 +17,21 @@ export const useHttp = axios.create({
 }) // 创建请求拦截
 useHttp.interceptors.request.use(
   (config) => {
+    const user = useUserStore()
+    console.log(config.url)
+
+    if (config.url != '/user-service/admin/user/login') {
+      if (user.isLogin) {
+        user.getToken && (config.headers.Authorization = user.getToken)
+      } else {
+        ElMessage.error({
+          message: '身份验证失败,未登录或登录失效!',
+          grouping: true,
+        })
+        user.clearData()
+        router.push('/login')
+      }
+    }
     return config
   },
   (error) => {
@@ -45,7 +61,7 @@ useHttp.interceptors.response.use(
       ElMessage.error({
         grouping: true,
         type,
-        message: data.message.length > 40 ? msg : data.message,
+        message: data.msg.length > 40 ? msg : data.msg,
       })
     }
     // 代码块

@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { userLogin } from '@/api/auth'
+import { useUserStore } from '@/stores/user'
+import { StatusCode } from '@/types'
 import { useDateFormat, useLocalStorage } from '@vueuse/core'
 
 const router = useRouter()
-
+const store = useUserStore()
 const isLoading = ref<boolean>(false)
 // 表单
 const userForm = reactive({
@@ -12,7 +15,7 @@ const userForm = reactive({
 const rules = reactive({
   username: [
     { required: true, message: '账号不能为空！', trigger: 'blur' },
-    { min: 6, max: 30, message: '长度在6-30个字符！', trigger: 'blur' },
+    { min: 5, max: 30, message: '长度在5-30个字符！', trigger: 'blur' },
   ],
   password: [
     { required: true, message: '密码不能为空！', trigger: 'blur' },
@@ -32,60 +35,56 @@ const route = useRoute()
  * @param type
  */
 async function onLogin(formEl: any | undefined) {
-  // if (!formEl || isLoading.value) return
-  // formEl.validate(async (valid: boolean) => {
-  //   if (!valid) return
-  //   isLoading.value = true
-  //   const { data } = await toLoginByPwd(userForm.username, userForm.password)
-  //   if (data.code === StatusCode.SUCCESS) {
-  //     // 登录成功
-  //     if (data.data !== '') {
-  //       store.onLogin(data.data)
-  //       ElNotification.success({
-  //         title: '登录成功！',
-  //         message: useDateFormat(Date.now(), 'YYYY-MM-DD HH:mm:ss').value,
-  //       })
-  //       router.push(route?.query?.redirect?.toString() || '/')
-  //     }
-  //     // 登录失败
-  //     else {
-  //       ElMessage.closeAll('error')
-  //       ElNotification.error({
-  //         message: data.message || '登录失败，请稍后再试！',
-  //         duration: 5000,
-  //       })
-  //       // store
-  //       store.$patch({
-  //         token: '',
-  //         isLogin: false,
-  //       })
-  //     }
-  //   } else {
-  //     ElMessage.closeAll('error')
-  //     ElNotification.error({
-  //       message: data.message || '登录失败，请稍后再试！',
-  //       duration: 5000,
-  //     })
-  //     // store
-  //     store.$patch({
-  //       token: '',
-  //       isLogin: false,
-  //     })
-  //   }
-  //   isLoading.value = false
-  // })
+  if (!formEl || isLoading.value) return
+  formEl.validate(async (valid: boolean) => {
+    if (!valid) return
+    isLoading.value = true
+    const { data } = await userLogin(userForm)
+    if (data.code === StatusCode.SUCCESS) {
+      if (data.data.token != '') {
+        store.onLogin(data.data.token)
+        ElNotification.success({
+          title: '登录成功！',
+          message: useDateFormat(Date.now(), 'YYYY-MM-DD HH:mm:ss').value,
+        })
+        router.push(route?.query?.redirect?.toString() || '/')
+      } else {
+        ElMessage.closeAll('error')
+        ElNotification.error({
+          message: data.msg || '登录失败，请稍后再试！',
+          duration: 5000,
+        })
+        // store
+        store.$patch({
+          token: '',
+          isLogin: false,
+        })
+      }
+    } else {
+      ElMessage.closeAll('error')
+      ElNotification.error({
+        message: data.msg || '登录失败，请稍后再试！',
+        duration: 5000,
+      })
+      // store
+      store.$patch({
+        token: '',
+        isLogin: false,
+      })
+    }
+    isLoading.value = false
+  })
 }
 
 onMounted(() => {
-  // if (store.isLogin) {
-  //   isLoading.value = true;
-  //   setTimeout(() => {
-  //     router.push("/");
-  //   }, 300);
-  // }
-  // else {
-  //   store.clearData();
-  // }
+  if (store.isLogin) {
+    isLoading.value = true
+    setTimeout(() => {
+      router.push('/')
+    }, 300)
+  } else {
+    store.clearData()
+  }
 })
 
 const getToken = computed(() => '12')

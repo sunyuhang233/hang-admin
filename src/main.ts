@@ -11,7 +11,7 @@ import 'swiper/css/navigation'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
 // swiepr
@@ -24,7 +24,9 @@ import directives from './plugins/directives'
 const app = createApp(App)
 // 注册
 app.component('VChart', VueCharts)
-app.use(createPinia())
+const store = createPinia()
+store.use(piniaPluginPersistedstate)
+app.use(store)
 app.use(directives) // 指令
 app.use(router)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
