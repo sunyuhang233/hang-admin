@@ -40,8 +40,25 @@ export function insertUser(user: InsertAdminUserDTO) {
   return useHttp.post<Result<null>>(`/user-service/admin/user/insert`, user)
 }
 
+/**
+ *  修改用户
+ * @param userId userId
+ * @param dto 修改用户vo
+ * @returns
+ */
 export function updateUserInfo(userId: number, dto: UpdateUserDTO) {
   return useHttp.put<Result<null>>(`/user-service/admin/user/update/${userId}`, {
     ...dto,
+  })
+}
+
+/**
+ *  批量删除用户
+ * @param userIds 用户ids
+ * @returns
+ */
+export function deleteUser(userIds: number[]) {
+  return useHttp.delete<Result<null>>(`/user-service/admin/user/delBatch`, {
+    data: userIds,
   })
 }

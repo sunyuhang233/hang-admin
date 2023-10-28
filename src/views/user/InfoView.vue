@@ -4,7 +4,7 @@ import type { CascaderProps } from 'element-plus'
 import { compareObjects } from '@/utils'
 import TableLayout from '@/layouts/TableLayout.vue'
 import { exportExcel } from '@/utils/elsx'
-import { changeUserStatus, getUserPage, insertUser, updateUserInfo } from '@/api/user/user'
+import { changeUserStatus, getUserPage, insertUser, updateUserInfo, deleteUser } from '@/api/user/user'
 import { StatusCode } from '@/types'
 import { Gender } from '@/types/common'
 import type { InsertAdminUserDTO, UpdateUserDTO } from '@/types/user/user'
@@ -186,6 +186,9 @@ async function onSubmit(type: 'insert' | 'update' | 'delete' | 'logout' | 'batch
             isLoading.value = false
             return ElMessage.error('请选择删除行数据！')
           } else {
+            console.log(selectList.value.map((item) => item.id))
+            res = await deleteUser(selectList.value.map((item) => item.id))
+
             ElMessage.success('批量删除成功！')
           }
         } else {
@@ -195,7 +198,7 @@ async function onSubmit(type: 'insert' | 'update' | 'delete' | 'logout' | 'batch
         if (!res) return
         if (res.data.code === StatusCode.SUCCESS) {
           isShowForm.value = false
-          if (type === 'insert' || type === 'update') loadData()
+          if (type === 'insert' || type === 'update' || type === 'batchDel') loadData()
           clearForm()
           ElNotification({
             title: `${tip.title}提示`,
