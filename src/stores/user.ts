@@ -42,7 +42,7 @@ export const useUserStore = defineStore(
     }
 
     const getToken = computed(() => {
-      if (isLogin && token.value) {
+      if (isLogin.value && token.value) {
         return token.value
       } else {
         clearData()
