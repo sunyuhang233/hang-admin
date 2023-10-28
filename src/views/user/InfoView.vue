@@ -4,7 +4,9 @@ import type { CascaderProps } from 'element-plus'
 import { compareObjects } from '@/utils'
 
 import TableLayout from '@/layouts/TableLayout.vue'
-import { exportExcel } from '@/utils/elsx';
+import { exportExcel } from '@/utils/elsx'
+import { getUserPage } from '@/api/user/user'
+import { StatusCode } from '@/types'
 enum Gender {
   BOY = '男',
   GIRL = '女',
@@ -25,8 +27,8 @@ const pageInfo = ref<any>({
   current: 1,
 })
 // 参数
-const page = ref<number>(1)
-const size = ref<number>(7)
+const pageNo = ref<number>(1)
+const pageSize = ref<number>(7)
 // 数据
 const updateTime = ref<string>()
 const formRef = ref()
@@ -111,143 +113,21 @@ async function loadData() {
   if (isLoading.value) return
   if (pageInfo.value.records.length) isLoading.value = true
   // 请求
-  updateTime.value = useDateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss').value
-  pageInfo.value.records = [
-    {
-      id: '1',
-      avatar: 'https://p.qqan.com/up/2021-2/16131991195037580.jpg',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '2',
-      avatar: 'https://p.qqan.com/up/2021-2/16131991195037580.jpg',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '3',
-      avatar: 'https://p.qqan.com/up/2021-2/16131991195037580.jpg',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '4',
-      avatar: 'https://p.qqan.com/up/2021-2/16131991195037580.jpg',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '5',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '5',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '5',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-    {
-      id: '5',
-      birthday: '1990-01-01',
-      createTime: '2021-02-15 16:00:00',
-      email: '123@qq.com',
-      gender: '男',
-      isEmailVerified: 1,
-      isPhoneVerified: 1,
-      lastLoginTime: '2021-02-15 16:00:00',
-      nickname: '张三',
-      phone: '13888888888',
-      status: 1,
-      updateTime: '2021-02-15 16:00:00',
-      username: 'zhangsan',
-    },
-  ]
-  setTimeout(() => {
-    isLoading.value = false
-  }, 300)
+  const { data } = await getUserPage(pageNo.value, pageSize.value, searchDTO.value)
+  if (data.code === StatusCode.SUCCESS) {
+    updateTime.value = useDateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss').value
+    pageInfo.value = data.data
+    setTimeout(() => {
+      isLoading.value = false
+    }, 300)
+  }
 }
 
 /**
  * 监听查询参数和分页信息的变化
  */
 watch(
-  [searchDTO, page, size],
+  [searchDTO, pageNo, pageSize],
   () => {
     loadData()
   },
@@ -533,7 +413,7 @@ function onExportExcel() {
             updateTime: '更新时间',
             createTime: '创建时间',
           },
-          { filename: `用户列表-第${page.value}页-${useDateFormat(new Date(), 'YYYY-MM-DD').value}.xlsx` },
+          { filename: `用户列表-第${pageNo.value}页-${useDateFormat(new Date(), 'YYYY-MM-DD').value}.xlsx` },
         )
       }
     },
@@ -543,7 +423,7 @@ function onExportExcel() {
  * 重置筛选
  */
 function resetSearchOption() {
-  page.value = 1
+  pageNo.value = 1
   searchDTO.value = {
     createTimeSort: undefined,
     isCustomer: undefined,
@@ -674,7 +554,7 @@ function resetSearchOption() {
             </template>
           </el-table-column>
           <!-- 昵称 -->
-          <el-table-column column-key="nickname" prop="nickname" label="昵称" min-width="100%" />
+          <el-table-column column-key="realName" prop="realName" label="昵称" min-width="100%" />
           <!-- 用户名 -->
           <el-table-column column-key="username" prop="username" show-overflow-tooltip width="100%" label="用户名" />
           <!-- 性别 -->
@@ -783,7 +663,11 @@ function resetSearchOption() {
       </template>
       <!-- 页脚 -->
       <template #footer>
-        <el-pagination v-model:current-page="page" background layout="prev, pager, next" :page-count="pageInfo.pages" />
+        <el-pagination
+          v-model:current-page="pageNo"
+          background
+          layout="prev, pager, next"
+          :page-count="pageInfo.pages" />
         <small>
           共
           <strong class="text-1rem text-[var(--el-color-primary)]">
