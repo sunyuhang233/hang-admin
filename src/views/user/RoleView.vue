@@ -261,6 +261,22 @@ function checkForm(call?: () => any) {
     }
   })
 }
+
+const isSelectLoading = ref(false)
+const parentList = ref<RoleVO[]>([])
+
+async function remoteMethod(val: string) {
+  if (isSelectLoading.value) return
+  const dto: SelectPageRoleDTO = val ? { name: val, code: val } : {}
+  isSelectLoading.value = true
+  const res = await getRoleList(1, 50, dto)
+  if (res.data.code === StatusCode.SUCCESS) {
+    parentList.value = res.data.data.records
+    setTimeout(() => {
+      isSelectLoading.value = false
+    }, 500)
+  }
+}
 </script>
 <template>
   <div class="~ cols-1 gap-6 grid">
@@ -490,6 +506,51 @@ function checkForm(call?: () => any) {
             :rules="[{ min: 1, max: 100, message: '长度为1-100字符！', trigger: ['change', 'blur'] }]"
             label="备注">
             <el-input v-model="form.intro" placeholder="角色备注（1-100字符）" />
+          </el-form-item>
+          <!-- 关联父角色 -->
+          <el-form-item
+            prop="parentId"
+            :rules="[{ required: true, message: '请填写角色父id！', trigger: ['change', 'blur'] }]"
+            label="父角色">
+            <el-select
+              v-model="form.parentId"
+              no-data-text="没有数据"
+              class="w-full flex-shrink-0"
+              popper-class="w-full"
+              :teleported="false"
+              filterable
+              reserve-keyword
+              clearable
+              remote
+              placeholder="关联父角色(选填)"
+              :loading="isSelectLoading"
+              :remote-method="remoteMethod"
+              @focus="remoteMethod('')">
+              <el-option
+                v-for="p in parentList"
+                :key="p.id"
+                truncate
+                :disabled="p.id === form.id"
+                border-0
+                border-b-1px
+                border-default
+                :class="{ 'line-through': p.id === form.id }"
+                style="
+                  padding: 0.6rem 1rem 1rem 1rem;
+                  height: fit-content;
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                "
+                :value="p.id">
+                <div flex flex-col justify-center>
+                  <p>{{ p.name }}</p>
+                  <el-tag type="info">
+                    {{ p.code }}
+                  </el-tag>
+                </div>
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </div>
