@@ -5,6 +5,7 @@ import type { IPage } from '@/types'
 import { StatusCode } from '@/types'
 import type { InsertRoleDTO, RoleTreeVO, RoleVO, SelectPageRoleDTO, UpdateRoleDTO } from '@/types/user/role'
 import { compareObjects } from '@/utils'
+import { exportExcel } from '@/utils/elsx'
 import { useDateFormat, useLocalStorage } from '@vueuse/core'
 
 const store = useUserStore()
@@ -84,7 +85,40 @@ watch(
 const selectList = ref<RoleVO[]>([])
 const isEdit = ref(false)
 
-function openExportExcel() {}
+function openExportExcel() {
+   ElMessageBox.confirm("确认导出表格？", "提醒", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "info",
+    center: true,
+    callback(res: string) {
+      if (res === "confirm") {
+        const rawData = selectList.value.length > 0 ? selectList.value : pageInfo.value.records as Partial<RoleVO>[];
+        if (rawData.length === 0)
+          return ElMessage.error("没有选中导出的数据！");
+
+        exportExcel<Partial<RoleVO>>(rawData, [
+          "id",
+          "name",
+          "parentId",
+          "code",
+          "intro",
+          "updateTime",
+          "createTime",
+        ], {
+          id: "角色ID",
+          name: "角色名称",
+          creator: "创建者",
+          parentId: "父角色ID",
+          intro: "备注",
+          code: "角色码CODE",
+          updateTime: "更新时间",
+          createTime: "创建时间",
+        }, { filename: `角色列表-第${pageNo.value}页-${useDateFormat(new Date(), "YYYY-MM-DD").value}.xlsx` });
+      }
+    },
+  });
+}
 
 type methodType = 'insert' | 'update' | 'delete' | 'batchDel'
 function onSubmit(type: methodType, data: string | number[] | Partial<RoleVO>, rawData: RoleVO = theRowInfo.value!) {
