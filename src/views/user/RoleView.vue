@@ -79,6 +79,15 @@ watch(
   },
   { immediate: true },
 )
+
+const selectList = ref<RoleVO[]>([])
+const isEdit = ref(false)
+
+function openExportExcel() {}
+
+function onSubmit(type: string, data: any) {}
+
+function onShowDetail(one: any, call?: Function) {}
 </script>
 <template>
   <div class="~ cols-1 gap-6 grid">
@@ -89,9 +98,71 @@ watch(
     </h3>
     <el-scrollbar view-class="flex items-center">
       <header class="top-menu w-full flex-row-bt-c">
-        <div mr-4 :class="" flex=" ~ gap-2 md:gap-4 items-center"></div>
+        <div
+          mr-4
+          flex=" ~ gap-2 md:gap-4 items-center"
+          :class="!isShowSearch ? 'scale-x-90  opacity-0' : ' scale-x-100 opacity-100'"
+          class="flex-shrink-0 transform-origin-left-center overflow-hidden transition-300 transition-all">
+          <small flex-shrink-0 opacity-70>筛选:</small>
+          <el-input
+            v-model="searchDTO.name"
+            placeholder="角色名 (Enter)"
+            prefix-icon="Search"
+            class="w-full"
+            label="角色名"
+            :disabled="isLoading"
+            @keyup.enter="loadData" />
+          <!-- 创建排序 -->
+          <el-checkbox
+            v-model="searchDTO.timeSort"
+            border
+            class="card-default"
+            :true-label="1"
+            :false-label="0"
+            @change="loadData()">
+            <i i-solar:sort-by-time-bold-duotone mr-2 p-0.5em />
+            <span v-show="searchDTO.timeSort === undefined">时间排序</span>
+            <span v-show="searchDTO.timeSort != undefined">{{ searchDTO.timeSort ? '时间降序' : '时间升序' }}</span>
+          </el-checkbox>
+          <el-button plain type="danger" @click="resetSearchData"> 重置 </el-button>
+        </div>
         <div class="flex ml-a">
-          <TableDefaultBtns></TableDefaultBtns>
+          <TableDefaultBtns
+            :menu="[
+            {
+              show:true,
+              title:'导出',
+              methods:openExportExcel,
+              icon:'i-solar:printer-outline',
+              type:'default',
+              plain:false
+            }, {
+                show: selectList.length > 0,
+                title: '批量',
+                methods: () => {
+                  onSubmit('batchDel', selectList.map(p => +p.id) as number[] || [])
+                },
+                icon: 'i-solar:trash-bin-minimalistic-broken ',
+                type: 'danger',
+              },
+              {
+                show:true,
+                title:isShowSearch ? '取消' : '筛选',
+                methods:()=>isShowSearch = !isShowSearch,
+                icon: 'i-solar:sort-from-top-to-bottom-line-duotone ', type: 'default'
+              },{
+                show:true,
+                title:'刷新',
+                methods:()=>loadData(),
+                icon:'i-solar:refresh-outline',
+                type:'info'
+              },{
+                show:true,
+                title:'添加',
+                methods:onShowDetail(undefined,()=>isEdit=true),
+                 icon: 'i-solar:box-outline mr-2', type: 'info'
+              }
+          ]"></TableDefaultBtns>
         </div>
       </header>
     </el-scrollbar>
