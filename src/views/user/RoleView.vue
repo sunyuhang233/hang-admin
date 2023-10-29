@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { batchDelRoleById, batchDelRoleByIds, getRoleList, getRoleTree, insertRole, updateRole } from '@/api/user/role'
-import { useUserStore } from '@/stores/user'
 import type { IPage } from '@/types'
 import { StatusCode } from '@/types'
 import type { InsertRoleDTO, RoleTreeVO, RoleVO, SelectPageRoleDTO, UpdateRoleDTO } from '@/types/user/role'
 import { compareObjects } from '@/utils'
 import { exportExcel } from '@/utils/elsx'
 import { useDateFormat, useLocalStorage } from '@vueuse/core'
-
-const store = useUserStore()
 const pageNo = ref(1)
 const pageSize = ref(10)
+
+// 表格数据
 const pageInfo = ref<IPage<RoleTreeVO>>({
   records: [],
   total: 0,
@@ -18,14 +17,18 @@ const pageInfo = ref<IPage<RoleTreeVO>>({
   size: 0,
   current: 0,
 })
+// 表格ref
 const roleTableRef = ref()
+// 最新修改时间
 const updateTime = ref<string>('')
 const route = useRoute()
 // 表格显示
 const toggleTableTree = useLocalStorage(`${route.path}toggleTableTree`, false)
 // 查询参数
 const isShowSearch = ref<boolean>(true)
+// Loading
 const isLoading = ref<boolean>(false)
+// 搜索条件
 const searchDTO = ref<SelectPageRoleDTO>({
   code: undefined,
   name: undefined,
@@ -35,6 +38,10 @@ const searchDTO = ref<SelectPageRoleDTO>({
   timeSort: undefined,
 })
 
+/**
+ *  加载数据
+ * @param type 加载类型 列表还是树形
+ */
 async function loadData(type: 'page' | 'tree' = 'tree') {
   if (isLoading.value) return
 
@@ -57,10 +64,14 @@ async function loadData(type: 'page' | 'tree' = 'tree') {
   }, 500)
 }
 
+// 监听搜索条件和分页数据的变化
 watch([searchDTO, pageNo, pageSize], () => {
   loadData()
 })
 
+/**
+ *  重置查询条件
+ */
 function resetSearchData() {
   pageNo.value = 1
   searchDTO.value = {
@@ -74,6 +85,9 @@ function resetSearchData() {
   loadData(toggleTableTree.value ? 'tree' : 'page')
 }
 
+/**
+ *  监听树形表格的展开收起
+ */
 watch(
   toggleTableTree,
   (val) => {
@@ -85,41 +99,46 @@ watch(
 const selectList = ref<RoleVO[]>([])
 const isEdit = ref(false)
 
+/**
+ *  导出数据
+ */
 function openExportExcel() {
-   ElMessageBox.confirm("确认导出表格？", "提醒", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
-    type: "info",
+  ElMessageBox.confirm('确认导出表格？', '提醒', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'info',
     center: true,
     callback(res: string) {
-      if (res === "confirm") {
-        const rawData = selectList.value.length > 0 ? selectList.value : pageInfo.value.records as Partial<RoleVO>[];
-        if (rawData.length === 0)
-          return ElMessage.error("没有选中导出的数据！");
+      if (res === 'confirm') {
+        const rawData = selectList.value.length > 0 ? selectList.value : (pageInfo.value.records as Partial<RoleVO>[])
+        if (rawData.length === 0) return ElMessage.error('没有选中导出的数据！')
 
-        exportExcel<Partial<RoleVO>>(rawData, [
-          "id",
-          "name",
-          "parentId",
-          "code",
-          "intro",
-          "updateTime",
-          "createTime",
-        ], {
-          id: "角色ID",
-          name: "角色名称",
-          creator: "创建者",
-          parentId: "父角色ID",
-          intro: "备注",
-          code: "角色码CODE",
-          updateTime: "更新时间",
-          createTime: "创建时间",
-        }, { filename: `角色列表-第${pageNo.value}页-${useDateFormat(new Date(), "YYYY-MM-DD").value}.xlsx` });
+        exportExcel<Partial<RoleVO>>(
+          rawData,
+          ['id', 'name', 'parentId', 'code', 'intro', 'updateTime', 'createTime'],
+          {
+            id: '角色ID',
+            name: '角色名称',
+            creator: '创建者',
+            parentId: '父角色ID',
+            intro: '备注',
+            code: '角色码CODE',
+            updateTime: '更新时间',
+            createTime: '创建时间',
+          },
+          { filename: `角色列表-第${pageNo.value}页-${useDateFormat(new Date(), 'YYYY-MM-DD').value}.xlsx` },
+        )
       }
     },
-  });
+  })
 }
 
+/**
+ *
+ * @param type 事件类型
+ * @param data 传递的数据
+ * @param rawData 当前行的数据
+ */
 type methodType = 'insert' | 'update' | 'delete' | 'batchDel'
 function onSubmit(type: methodType, data: string | number[] | Partial<RoleVO>, rawData: RoleVO = theRowInfo.value!) {
   const tip = {
@@ -218,6 +237,10 @@ const form = ref<Partial<RoleVO & InsertRoleDTO>>({
 
 const isShowForm = ref(false)
 const isFormLoading = ref(false)
+
+/**
+ *  显示当前行的数据详情
+ */
 async function onShowInfoDetail(row?: RoleVO, call?: () => any) {
   if (row) {
     form.value = {
@@ -240,6 +263,9 @@ async function onShowInfoDetail(row?: RoleVO, call?: () => any) {
 
 const formRef = ref()
 
+/**
+ *  表单当前项和表单数据是否发生了变化
+ */
 const isUpdate = computed(() => {
   if (theRowInfo.value) return Object.keys(compareObjects(theRowInfo.value, form.value as Partial<RoleVO>)).length > 0
   else return false
@@ -299,6 +325,10 @@ function checkForm(call?: () => any) {
 const isSelectLoading = ref(false)
 const parentList = ref<RoleVO[]>([])
 
+/**
+ *  加载角色的数据
+ * @param val 父级id
+ */
 async function remoteMethod(val: string) {
   if (isSelectLoading.value) return
   const dto: SelectPageRoleDTO = val ? { name: val, code: val } : {}
