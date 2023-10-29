@@ -87,6 +87,18 @@ const asyncRoutes = [
           onIcon: 'i-solar:user-bold',
         },
       },
+      {
+        name: '角色列表',
+        icon: 'i-solar:users-group-rounded-broken',
+        path: '/user/role',
+        component: () => import('@/views/user/RoleView.vue'),
+        meta: {
+          url: '/user/role',
+          title: '角色列表',
+          icon: 'i-solar:users-group-rounded-broken',
+          onIcon: 'i-solar:users-group-rounded-bold-duotone',
+        },
+      },
     ],
   },
 ]

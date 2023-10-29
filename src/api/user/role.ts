@@ -1,13 +1,21 @@
-import type { Result } from '@/types'
+import type { IPage, Result } from '@/types'
 import { useHttp } from '..'
-import type { RoleTreeVO } from '@/types/user/role'
+import type { RoleTreeVO, RoleVO, SelectPageRoleDTO } from '@/types/user/role'
 
 /**
  *  获取角色树形菜单
  * @returns Result
  */
 export function getRoleTree() {
-  return useHttp.get<Result<RoleTreeVO>>('/user-service/admin/role/tree')
+  return useHttp.get<Result<RoleTreeVO[]>>('/user-service/admin/role/tree')
+}
+
+/**
+ *  获取角色列标配
+ * @returns Result
+ */
+export function getRoleList(pageNo: number, pageSize: number, dto: SelectPageRoleDTO) {
+  return useHttp.post<Result<IPage<RoleVO>>>('/user-service/admin/role/list', dto)
 }
 
 /**

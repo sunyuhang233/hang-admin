@@ -1,5 +1,5 @@
 export interface IPage<T> {
-  records: T
+  records: T[]
   total: number
   size: number
   current: number
@@ -28,5 +28,3 @@ export enum UserStatus {
   ENABLE = '启用',
   UNABLE = '禁用',
 }
-
-

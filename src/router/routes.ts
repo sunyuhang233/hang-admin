@@ -50,6 +50,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
               onIcon: 'i-solar:user-bold',
             },
           },
+          {
+            path: 'role',
+            name: 'userRole',
+            component: () => import('@/views/user/RoleView.vue'),
+            meta: {
+              url: '/user/role',
+              title: '角色列表',
+              icon: 'i-solar:users-group-rounded-broken',
+              onIcon: 'i-solar:users-group-rounded-bold-duotone',
+            },
+          },
         ],
       },
     ],
