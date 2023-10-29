@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { useUserStore } from '@/stores/user'
 
+const store = useUserStore()
 
 const getNowStatus = computed(() => {
   return useNowDateText(new Date())
@@ -19,7 +21,7 @@ function useNowDateText(date: Date = new Date()): string {
 
 <template>
   <div mb-4>
-    <h3 mb-4>Hi 阿航,</h3>
+    <h3 mb-4>Hi {{ store.userInfo.username }},</h3>
     <h2 mb-2>欢迎回来，{{ getNowStatus }}</h2>
   </div>
 </template>

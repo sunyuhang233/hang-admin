@@ -1,5 +1,6 @@
 import type { Result } from '@/types'
 import { useHttp } from '.'
+import type { UserVO } from '@/types/user/user'
 
 interface LoginUserVo {
   username: string
@@ -25,4 +26,12 @@ export function userLogin(loginUserVo: LoginUserVo) {
  */
 export function userExit() {
   return useHttp.post<Result<null>>('/user-service/admin/user/logout')
+}
+
+/**
+ *  获取登录用户信息
+ * @returns
+ */
+export function getUserInfo() {
+  return useHttp.get<Result<any>>('/user-service/admin/user/getUserInfo')
 }

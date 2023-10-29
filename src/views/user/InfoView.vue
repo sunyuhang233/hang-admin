@@ -8,12 +8,10 @@ import { changeUserStatus, getUserPage, insertUser, updateUserInfo, deleteUser }
 import { StatusCode } from '@/types'
 import { Gender } from '@/types/common'
 import type { InsertAdminUserDTO, UpdateUserDTO } from '@/types/user/user'
-const user = ref({
-  userInfo: {
-    id: '123',
-  },
-})
+import { useUserStore } from '@/stores/user'
+import { BindUserRole, getRoleTree, getRoleTreeByUserId } from '@/api/user/role'
 
+const store = useUserStore()
 // 数据
 const pageInfo = ref<any>({
   records: [],
@@ -329,7 +327,7 @@ function onShowInfoDetail(row?: any, call?: () => any) {
 const isShowRoleForm = ref(false)
 const roleForm = reactive<{
   userId?: string
-  roleIds: string[]
+  roleIds: number[]
   roleTree?: any
   isUpdate: boolean
   props?: CascaderProps
@@ -360,8 +358,14 @@ async function onShowInfoRole(userId: string) {
   if (userId) {
     roleForm.userId = userId
     loadInfoRoleTree()
-    //  roleForm.roleIds = res.data.data.map((p) => p.id)
-    roleForm.roleIds = []
+    const res = await getRoleTreeByUserId(+roleForm.userId)
+    if (res.data.code === StatusCode.SUCCESS) {
+      roleForm.roleIds = res.data.data.map((item) => +item.id)
+      console.log('roleForm.roleIds', roleForm.roleIds)
+    } else {
+      roleForm.roleIds = []
+    }
+
     isShowRoleForm.value = true
   }
 }
@@ -370,13 +374,18 @@ async function onShowInfoRole(userId: string) {
  * 加载角色树
  */
 async function loadInfoRoleTree() {
-  roleForm.roleTree = []
+  const { data } = await getRoleTree()
+  if (data.code == StatusCode.SUCCESS) {
+    roleForm.roleTree = data.data
+  } else {
+    roleForm.roleTree = []
+  }
 }
 
 /**
  * 提交修改角色绑定
  */
-function onSubmitRoleBind(userId: string, ids: string[]) {
+function onSubmitRoleBind(userId: string, ids: number[]) {
   if (!userId) return
   ElMessageBox.confirm('是否确认绑定？', '操作提醒', {
     confirmButtonText: '确认',
@@ -385,12 +394,15 @@ function onSubmitRoleBind(userId: string, ids: string[]) {
     center: true,
     callback: async (action: string) => {
       if (action === 'confirm') {
-        ElNotification.success({
-          title: '绑定提示',
-          message: '绑定角色成功！',
-        })
+        const { data } = await BindUserRole(+userId, ids)
+        if (data.code === StatusCode.SUCCESS) {
+          ElNotification.success({
+            title: '绑定提示',
+            message: '绑定角色成功！',
+          })
+        }
+        isShowRoleForm.value = false
       }
-      isShowRoleForm.value = false
     },
   })
 }
@@ -602,7 +614,7 @@ function resetSearchOption() {
             <template #default="{ row }">
               <el-switch
                 v-model="row.status"
-                :disabled="row?.id === user.userInfo?.id"
+                :disabled="row?.id === store?.userInfo?.id"
                 class="mx-a transition-200 active:scale-90"
                 style="--el-switch-on-color: var(--el-color-info); --el-switch-off-color: var(--el-color-error)"
                 inline-prompt

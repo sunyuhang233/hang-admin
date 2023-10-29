@@ -69,12 +69,25 @@ const asyncRoutes = [
     path: 'user',
     name: '用户',
     icon: 'i-solar:shield-user-broken',
-    onIcon: 'i-solar:bill-list-bold-duotone',
     meta: {
       title: '用户',
       icon: 'i-solar:shield-user-broken',
       onIcon: 'i-solar:bill-list-bold-duotone',
     },
+    children: [
+      {
+        path: '/user/info',
+        name: '用户列表',
+        icon: 'i-solar:user-broken',
+        component: () => import('@/views/user/InfoView.vue'),
+        meta: {
+          url: '/user/info',
+          title: '用户列表',
+          icon: 'i-solar:user-broken',
+          onIcon: 'i-solar:user-bold',
+        },
+      },
+    ],
   },
 ]
 </script>

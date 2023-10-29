@@ -4,6 +4,7 @@ import { StatusCode, UserStatus } from '@/types'
 import type { UserInfoVO } from '@/types/auth'
 import { Gender } from '@/types/common'
 import { defineStore } from 'pinia'
+import { getUserInfo } from '@/api/auth'
 
 export const useUserStore = defineStore(
   'useUserStore',
@@ -31,6 +32,9 @@ export const useUserStore = defineStore(
     const onLogin = async (t: string) => {
       token.value = t
       isLogin.value = true
+      const { data } = await getUserInfo()
+      if (data.code === StatusCode.SUCCESS) userInfo.value = data.data
+      else clearData()
     }
 
     const clearData = async () => {
@@ -71,6 +75,15 @@ export const useUserStore = defineStore(
         })
         .catch(() => {})
     }
+
+    watch(isLogin, async (v) => {
+      if (v) {
+        const { data } = await getUserInfo()
+        if (data.code === StatusCode.SUCCESS) {
+          userInfo.value = data.data.user
+        } else clearData()
+      }
+    })
 
     return {
       onLogin,
