@@ -1,6 +1,6 @@
 import type { IPage, Result } from '@/types'
 import { useHttp } from '..'
-import type { RoleTreeVO, RoleVO, SelectPageRoleDTO } from '@/types/user/role'
+import type { InsertRoleDTO, RoleTreeVO, RoleVO, SelectPageRoleDTO, UpdateRoleDTO } from '@/types/user/role'
 
 /**
  *  获取角色树形菜单
@@ -34,4 +34,47 @@ export function getRoleTreeByUserId(userId: number) {
  */
 export function BindUserRole(userId: number, roleIds: number[]) {
   return useHttp.post<Result<null>>(`/user-service/admin/role/distribution/role/${userId}`, roleIds)
+}
+
+/**
+ * 添加角色(单个)
+ * @param dto 参数
+ * @returns Result
+ */
+export function insertRole(dto: InsertRoleDTO) {
+  return useHttp.post<Result<null>>('/user-service/admin/role/save', {
+    ...dto,
+  })
+}
+
+/**
+ * 修改角色信息
+ * @param roleId 角色id
+ * @param dto 修改参数
+ * @returns Result
+ */
+export function updateRole(roleId: number, dto: UpdateRoleDTO) {
+  return useHttp.put<Result<null>>(`/user-service/admin/role/update/${roleId}`, {
+    ...dto,
+  })
+}
+
+/**
+ * 删除角色(批量)
+ * @param ids 删除数组
+ * @returns Result
+ */
+export function batchDelRoleByIds(roleIds: string[]) {
+  return useHttp.delete<Result<null>>('/user-service/admin/role/delete', {
+    data: roleIds,
+  })
+}
+
+/**
+ * 删除角色(单个)
+ * @param id 删除id
+ * @returns Result
+ */
+export function batchDelRoleById(roleId: number) {
+  return useHttp.delete<Result<null>>(`/user-service/admin/role/delete/${roleId}`)
 }

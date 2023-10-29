@@ -58,3 +58,31 @@ export interface SelectPageRoleDTO {
   timeSort?: number
   [property: string]: any
 }
+
+export interface InsertRoleDTO {
+  /**
+   * 角色唯一Code
+   */
+  code: string
+  /**
+   * 角色备注
+   */
+  intro: string
+  /**
+   * 角色名称
+   */
+  name: string
+  /**
+   * 角色ID
+   */
+  parentId?: number
+  /**
+   * 角色ID
+   */
+  permissionList?: string[]
+}
+
+/**
+ * 更新DTO
+ */
+export type UpdateRoleDTO = Omit<InsertRoleDTO, 'code'>

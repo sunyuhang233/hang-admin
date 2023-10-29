@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { getRoleList, getRoleTree } from '@/api/user/role'
+import { batchDelRoleById, batchDelRoleByIds, getRoleList, getRoleTree, insertRole, updateRole } from '@/api/user/role'
 import { useUserStore } from '@/stores/user'
 import type { IPage } from '@/types'
 import { StatusCode } from '@/types'
-import type { RoleTreeVO, RoleVO, SelectPageRoleDTO } from '@/types/user/role'
+import type { InsertRoleDTO, RoleTreeVO, RoleVO, SelectPageRoleDTO, UpdateRoleDTO } from '@/types/user/role'
+import { compareObjects } from '@/utils'
 import { useDateFormat, useLocalStorage } from '@vueuse/core'
 
 const store = useUserStore()
@@ -85,9 +86,181 @@ const isEdit = ref(false)
 
 function openExportExcel() {}
 
-function onSubmit(type: string, data: any) {}
+type methodType = 'insert' | 'update' | 'delete' | 'batchDel'
+function onSubmit(type: methodType, data: string | number[] | Partial<RoleVO>, rawData: RoleVO = theRowInfo.value!) {
+  const tip = {
+    class: 'el-button--primary',
+    title: '操作',
+  }
+  if (type === 'insert') {
+    tip.title = '角色'
+  } else if (type === 'delete') {
+    tip.class = 'el-button--danger'
+    tip.title = '角色'
+  } else if (type === 'update') {
+    tip.title = '保存更新'
+  } else if (type === 'batchDel') {
+    tip.title = '批量删除'
+    tip.class = 'el-button--danger'
+  } else {
+    return
+  }
 
-function onShowDetail(one: any, call?: Function) {}
+  // 二次确认
+  ElMessageBox.confirm(`是否确认${tip.title}？`, '操作提醒', {
+    confirmButtonText: '确认',
+    confirmButtonClass: tip.class,
+    cancelButtonText: '取消',
+    type: 'warning',
+    center: true,
+    async callback(action: string) {
+      if (action === 'confirm') {
+        isLoading.value = true
+        let res = null
+
+        if (type === 'insert') {
+          res = await insertRole(data as InsertRoleDTO)
+        } else if (type === 'update') {
+          if (!rawData) return
+          res = await updateRole(rawData.id!, compareObjects(rawData, data as Partial<RoleVO>) as UpdateRoleDTO)
+        } else if (type === 'delete') {
+          res = await batchDelRoleById(data as number)
+        } else if (type === 'batchDel') {
+          if (!selectList.value.length) {
+            isLoading.value = false
+            return ElMessage.error('请选择删除行数据！')
+          }
+          res = await batchDelRoleByIds((data as string[]) || selectList.value.map((p) => p.id))
+        } else return
+
+        isLoading.value = false
+
+        if (!res) return
+
+        if (res.data.code === StatusCode.SUCCESS) {
+          isShowForm.value = false
+          if (type === 'insert' || type === 'update' || type === 'delete' || type === 'batchDel') {
+            loadData()
+          }
+          clearForm()
+          ElNotification({
+            title: `${tip.title}提示`,
+            message: res.data.message || `${tip.title}成功！`,
+            type: 'success',
+            duration: 2000,
+          })
+        } else {
+          ElMessage.closeAll('error')
+          ElMessage.error(res.data.message || `${tip.title}失败，请稍后再试！`)
+        }
+      } else {
+        ElMessage.info('取消操作')
+      }
+    },
+  })
+}
+
+/**
+ *  多选
+ * @param list 选中的数据
+ */
+function onSelectChange(list: RoleVO[]) {
+  selectList.value = list.length ? list : []
+}
+
+const theRowInfo = ref<RoleVOExt>()
+interface RoleVOExt extends RoleVO {
+  permissionList?: string[]
+}
+// 表单参数
+const form = ref<Partial<RoleVO & InsertRoleDTO>>({
+  id: undefined,
+  code: undefined,
+  name: undefined,
+  intro: undefined,
+  parentId: undefined,
+  permissionList: [],
+})
+
+const isShowForm = ref(false)
+const isFormLoading = ref(false)
+async function onShowInfoDetail(row?: RoleVO, call?: () => any) {
+  if (row) {
+    form.value = {
+      ...row,
+    }
+    // 查询对应权限列表
+  } else {
+    form.value = {
+      id: undefined,
+      code: undefined,
+      name: undefined,
+      intro: undefined,
+      parentId: undefined,
+      permissionList: [],
+    }
+  }
+  call && call()
+  isShowForm.value = true
+}
+
+const formRef = ref()
+
+const isUpdate = computed(() => {
+  if (theRowInfo.value) return Object.keys(compareObjects(theRowInfo.value, form.value as Partial<RoleVO>)).length > 0
+  else return false
+})
+
+/**
+ * 关闭弹窗 之前 diff
+ * @param done 是否完成
+ * @param doneBack 关闭后的回调
+ */
+function onBeforeCloseDialog(done: () => void, doneBack?: () => any, cancelBack?: () => any, flag?: boolean) {
+  if (flag) {
+    ElMessageBox.confirm('是否放弃修改？', '操作提醒', {
+      confirmButtonText: '放弃',
+      confirmButtonClass: 'el-button--danger',
+      cancelButtonText: '取消',
+      center: true,
+    })
+      .then(() => {
+        // 确认退出
+        doneBack && doneBack()
+        done()
+      })
+      .catch(() => {
+        // 取消
+        cancelBack && cancelBack()
+      })
+  } else {
+    done()
+  }
+}
+
+// 清除表单
+function clearForm(call?: () => void) {
+  form.value = {
+    code: undefined,
+    name: undefined,
+    intro: undefined,
+    parentId: undefined,
+  }
+  formRef.value?.resetFields()
+  call && call()
+}
+/**
+ * 验证表单
+ */
+function checkForm(call?: () => any) {
+  formRef.value?.validate(async (valid: boolean) => {
+    if (valid) {
+      call && call()
+    } else {
+      return
+    }
+  })
+}
 </script>
 <template>
   <div class="~ cols-1 gap-6 grid">
@@ -159,7 +332,7 @@ function onShowDetail(one: any, call?: Function) {}
               },{
                 show:true,
                 title:'添加',
-                methods:onShowDetail(undefined,()=>isEdit=true),
+                methods:onShowInfoDetail.bind(undefined,undefined,()=>isEdit=true),
                  icon: 'i-solar:box-outline mr-2', type: 'info'
               }
           ]"></TableDefaultBtns>
@@ -181,7 +354,9 @@ function onShowDetail(one: any, call?: Function) {}
       }"
       row-class-name="group h-5.5rem"
       row-key="id"
-      height="72vh">
+      height="72vh"
+      @row-click="(row:RoleVO)=>theRowInfo = { ...row, permissionList: [] }"
+      @selection-change="onSelectChange">
       <!-- 选择 -->
       <el-table-column fixed type="selection" />
       <!-- 角色ID -->
@@ -236,12 +411,19 @@ function onShowDetail(one: any, call?: Function) {}
         <template #default="{ row }">
           <div class="flex opacity-0 transition-200 group-hover:opacity-100">
             <!-- 预览 -->
-            <div class="mx-2 btn-default hover:text-[var(--el-color-info)]" style="padding: 0rem 0.6rem">
+            <div
+              class="mx-2 btn-default hover:text-[var(--el-color-info)]"
+              style="padding: 0rem 0.6rem"
+              @click="onShowInfoDetail(row, () => (isEdit = false))">
               <i i-solar:eye-bold-duotone p-0.5em />
             </div>
             <!-- 编辑 -->
-            <el-button icon="Edit" type="success" style="padding: 0rem 0.6rem" />
-            <el-button type="danger" style="padding: 0rem 0.6rem" icon="delete" />
+            <el-button
+              icon="Edit"
+              type="success"
+              style="padding: 0rem 0.6rem"
+              @click="onShowInfoDetail(row, () => (isEdit = true))" />
+            <el-button type="danger" style="padding: 0rem 0.6rem" icon="delete" @click="onSubmit('delete', row.id)" />
           </div>
         </template>
       </el-table-column>
@@ -259,6 +441,66 @@ function onShowDetail(one: any, call?: Function) {}
         >角色
       </small>
     </footer>
+    <!-- 角色查看器 -->
+    <el-dialog
+      v-model="isShowForm"
+      v-loading="isFormLoading"
+      class="view-dialog"
+      align-center
+      draggable
+      width="fit-content"
+      :before-close="(done:()=>void) => isShowForm && onBeforeCloseDialog(done, clearForm, undefined, isUpdate)">
+      <template #header>
+        <h3 text-center>角色详情</h3>
+      </template>
+      <div relative w-80vw md:w-380px>
+        <el-form
+          ref="formRef"
+          :model="form"
+          :disabled="isLoading || !isEdit"
+          label-width="6em"
+          label-position="left"
+          class="p-4 md:p-6"
+          hide-required-asterisk
+          ><el-form-item v-if="form.id" prop="id" label="角色ID"> <CopyText :text="form.id" /> </el-form-item>
+          <!-- 角色名称 -->
+          <el-form-item
+            prop="name"
+            :rules="[
+              { required: true, message: '请填写角色名称！', trigger: 'blur' },
+              { min: 1, max: 100, message: '长度为1-100字符！', trigger: ['change', 'blur'] },
+            ]"
+            label="角色名称">
+            <el-input v-model="form.name" placeholder="请填写名称（1-100字符）" />
+          </el-form-item>
+          <!-- 角色code -->
+          <el-form-item
+            prop="code"
+            :rules="[
+              { required: true, message: '请填写角色CODE！', trigger: 'blur' },
+              { pattern: /^[A-Z](_*[A-Z])*_[A-Z]+$/, message: 'CODE要求为首尾大写字母中间_分隔！', trigger: 'change' },
+              { min: 1, max: 50, message: '长度为1-50字符！', trigger: ['change', 'blur'] },
+            ]"
+            label="角色CODE">
+            <el-input v-model="form.code" placeholder="请填写角色码CODE（1-50字符）" />
+          </el-form-item>
+          <!-- 备注 -->
+          <el-form-item
+            prop="name"
+            :rules="[{ min: 1, max: 100, message: '长度为1-100字符！', trigger: ['change', 'blur'] }]"
+            label="备注">
+            <el-input v-model="form.intro" placeholder="角色备注（1-100字符）" />
+          </el-form-item>
+        </el-form>
+      </div>
+      <template #footer>
+        <el-button type="danger" plain @click="isShowForm = false && clearForm()">关闭</el-button>
+        <el-button type="info" v-if="!form?.id" @click="checkForm(onSubmit.bind(null, 'insert', form))">添加</el-button>
+        <el-button type="info" :disabled="!isUpdate" v-else @click="checkForm(onSubmit.bind(null, 'update', form))"
+          >保存修改</el-button
+        >
+      </template>
+    </el-dialog>
   </div>
 </template>
 
