@@ -61,6 +61,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
               onIcon: 'i-solar:users-group-rounded-bold-duotone',
             },
           },
+          {
+            path: 'menu',
+            name: 'menu',
+            component: () => import('@/views/user/MenuView.vue'),
+            meta: {
+              url: '/user/permission',
+              title: '菜单列表',
+              icon: 'i-solar:lock-keyhole-minimalistic-broken',
+              onIcon: 'i-solar:lock-keyhole-minimalistic-bold-duotone',
+            },
+          },
         ],
       },
     ],

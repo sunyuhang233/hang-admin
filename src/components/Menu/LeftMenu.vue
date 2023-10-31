@@ -99,6 +99,20 @@ const asyncRoutes = [
           onIcon: 'i-solar:users-group-rounded-bold-duotone',
         },
       },
+      {
+        name: '菜单列表',
+        path: '/user/menu',
+        component: () => import('@/views/user/MenuView.vue'),
+        title: '菜单列表',
+        icon: 'i-solar:lock-keyhole-minimalistic-broken',
+        onIcon: 'i-solar:lock-keyhole-minimalistic-bold-duotone',
+        meta: {
+          url: '/user/permission',
+          title: '菜单列表',
+          icon: 'i-solar:lock-keyhole-minimalistic-broken',
+          onIcon: 'i-solar:lock-keyhole-minimalistic-bold-duotone',
+        },
+      },
     ],
   },
 ]

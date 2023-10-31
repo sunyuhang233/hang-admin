@@ -1,6 +1,6 @@
 import type { InsertMenuDTO, MenuVO, SelectMenuListDTO, UpdateMenuDTO } from '@/types/user/menu'
 import { useHttp } from '..'
-import type { Result } from '@/types'
+import type { IPage, Result } from '@/types'
 
 /**
  *  获取菜单树形菜单
@@ -16,10 +16,8 @@ export function getRoleTree() {
  * @param token token
  * @returns Menu列表
  */
-export function getMenuList(dto: SelectMenuListDTO) {
-  return useHttp.post<Result<MenuVO[]>>('/user-service/admin/menu/list', {
-    ...dto,
-  })
+export function getMenuList(pageNo: number, pageSize: number, dto: SelectMenuListDTO) {
+  return useHttp.post<Result<IPage<MenuVO>>>(`/user-service/admin/menu/list?pageNo=${pageNo}&pageSize=${pageSize}`, dto)
 }
 
 /**

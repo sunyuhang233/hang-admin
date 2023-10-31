@@ -129,3 +129,40 @@ export interface UpdateMenuDTO {
   parentId?: string
   [property: string]: any
 }
+/**
+ * 菜单列表VO
+ *
+ * MenuVO
+ */
+export interface MenuVO {
+  /**
+   * 菜单编码
+   */
+  code: string
+  id: string
+  sysType: SysType
+  /**
+   * 页面对应的地址
+   */
+  linkUrl: string
+  /**
+   * 名称
+   */
+  name: string
+  /**
+   * 排序号
+   */
+  sortOrder?: number
+  /**
+   * 父节点
+   */
+  parentId?: string
+  /**
+   * 节点类型：（1页面，2按钮）
+   */
+  type: MenuType
+  updateTime: string
+  createTime: string
+  children?: MenuVO[]
+}
+export const MenuTypeObj = menuTypeObj

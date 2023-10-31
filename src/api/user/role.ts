@@ -15,7 +15,7 @@ export function getRoleTree() {
  * @returns Result
  */
 export function getRoleList(pageNo: number, pageSize: number, dto: SelectPageRoleDTO) {
-  return useHttp.post<Result<IPage<RoleVO>>>('/user-service/admin/role/list', dto)
+  return useHttp.post<Result<IPage<RoleVO>>>(`/user-service/admin/role/list?pageNo=${pageNo}&pageSize=${pageSize}`, dto)
 }
 
 /**
