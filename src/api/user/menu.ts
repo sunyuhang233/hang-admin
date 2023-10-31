@@ -47,13 +47,21 @@ export function updateMenu(menuId: number, dto: UpdateMenuDTO) {
 /**
  * 删除菜单(批量)
  * @param ids 菜单ids
- * @param token token
- * @returns 删除行数
+ * @returns Result
  */
 export function batchDeleteMenu(menuIds: number[]) {
-  return useHttp.delete<Result<number>>('/user-service/admin/menu/delete', {
+  return useHttp.delete<Result<null>>('/user-service/admin/menu/delete', {
     data: {
       menuIds,
     },
   })
+}
+
+/**
+ * 删除菜单(单个)
+ * @param id 菜单id
+ * @returns Result
+ */
+export function batchDeleteMenuByMenuId(menuId: number) {
+  return useHttp.delete<Result<null>>(`/user-service/admin/menu/delete/${menuId}`)
 }

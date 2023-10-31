@@ -166,3 +166,6 @@ export interface MenuVO {
   children?: MenuVO[]
 }
 export const MenuTypeObj = menuTypeObj
+
+
+export const SysTypeObj = sysTypeObj
