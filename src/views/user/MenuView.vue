@@ -7,6 +7,7 @@ import { MenuTypeObj, SysTypeObj } from '@/types/user/menu'
 import { compareObjects } from '@/utils'
 import { exportExcel } from '@/utils/elsx'
 import { useDateFormat, useLocalStorage } from '@vueuse/core'
+import { number } from 'echarts/core'
 const pageNo = ref(1)
 const pageSize = ref(10)
 const menuListTree = ref<MenuVO[]>([])
@@ -114,6 +115,7 @@ const form = ref<Partial<MenuVO>>({
   parentId: undefined,
   linkUrl: undefined,
   sortOrder: undefined,
+  authority: undefined,
   /**
    * 操作系统（0前台，1管理...）
    */
@@ -169,6 +171,7 @@ async function onSubmit(
         isLoading.value = true
         let res
         if (type === 'insert') {
+          console.log('insert', data)
         } else if (type === 'update') {
           if (!rawData) return
           res = await updateMenu(+rawData.id, data as UpdateMenuDTO)
@@ -323,9 +326,26 @@ function onShowInfoDetail(row?: Partial<MenuVO>, call?: () => any) {
       ...row,
     }
   }
+  console.log('row', row)
+
   call && call()
   isShowForm.value = true
 }
+
+/**
+ * 筛选权限
+ */
+function onFilterMenuMethod(node: any, val: string) {
+  return node.data.name.includes(val)
+}
+const selectParentProps = reactive({
+  multiple: false,
+  value: 'id', // 值key
+  label: 'name', // 显示标签key
+  children: 'children',
+  checkStrictly: true, // 严格
+  emitPath: false, // false返回当前选中
+})
 </script>
 <template>
   <div class="~ cols-1 gap-6 grid">
@@ -374,10 +394,18 @@ function onShowInfoDetail(row?: Partial<MenuVO>, call?: () => any) {
         </template>
       </el-table-column>
       <!-- 菜单码 -->
-      <el-table-column label="菜单码CODE" column-key="code" prop="code" min-width="180%">
+      <el-table-column label="菜单码CODE" column-key="code" prop="code" min-width="120%">
         <template #default="{ row }">
           <el-tag type="info" truncate>
             <CopyText :text="row?.code" :show-icon="false" text-0.8rem />
+          </el-tag>
+        </template>
+      </el-table-column>
+      <!-- 权限 -->
+      <el-table-column label="权限CODE" column-key="authority" prop="authority" min-width="120%">
+        <template #default="{ row }">
+          <el-tag type="primary" truncate>
+            <CopyText :text="row?.authority" :show-icon="false" text-0.8rem />
           </el-tag>
         </template>
       </el-table-column>
@@ -493,6 +521,16 @@ function onShowInfoDetail(row?: Partial<MenuVO>, call?: () => any) {
               label="菜单code">
               <el-input v-model="form.code" class="w-full" placeholder="请填写菜单code" />
             </el-form-item>
+            <!-- 权限code -->
+            <el-form-item
+              prop="authority"
+              :rules="[
+                { required: true, message: '请填写权限code！', trigger: 'blur' },
+                { min: 1, max: 100, message: '长度为1-100字符！', trigger: ['change', 'blur'] },
+              ]"
+              label="权限code">
+              <el-input v-model="form.authority" class="w-full" placeholder="请填写权限code" />
+            </el-form-item>
             <!-- 关联链接 -->
             <el-form-item
               prop="linkUrl"
@@ -536,6 +574,32 @@ function onShowInfoDetail(row?: Partial<MenuVO>, call?: () => any) {
               </el-select>
             </el-form-item>
             <!-- 父菜单 -->
+            <el-form-item
+              prop="parentId"
+              :rules="[{ max: 25, type: number, message: '长度为1-50字符！', trigger: ['change', 'blur'] }]"
+              label="父菜单">
+              <el-cascader
+                v-model="form.parentId"
+                placeholder="关联父菜单（选填）"
+                no-data-text="没有数据"
+                class="w-full"
+                :options="menuListTree"
+                clearable
+                filterable
+                :filter-method="onFilterMenuMethod"
+                :props="selectParentProps"
+                collapse-tags
+                collapse-tags-tooltip
+                :max-collapse-tags="3"
+                :check-strictly="true"
+                :show-all-levels="false"
+                tag-type="info">
+                <template #default="{ data }">
+                  <span>{{ data.name }}</span>
+                </template>
+                <template #empty> 暂无数据 </template>
+              </el-cascader>
+            </el-form-item>
             <!-- 权重 -->
             <el-form-item
               prop="sortOrder"

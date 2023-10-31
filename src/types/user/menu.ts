@@ -163,9 +163,9 @@ export interface MenuVO {
   type: MenuType
   updateTime: string
   createTime: string
+  authority?: string
   children?: MenuVO[]
 }
 export const MenuTypeObj = menuTypeObj
-
 
 export const SysTypeObj = sysTypeObj
