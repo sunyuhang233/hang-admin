@@ -6,7 +6,7 @@ import type { IPage, Result } from '@/types'
  *  获取菜单树形菜单
  * @returns Result
  */
-export function getRoleTree() {
+export function getMenuTree() {
   return useHttp.get<Result<MenuVO[]>>('/user-service/admin/menu/tree')
 }
 
@@ -16,8 +16,8 @@ export function getRoleTree() {
  * @param token token
  * @returns Menu列表
  */
-export function getMenuList(pageNo: number, pageSize: number, dto: SelectMenuListDTO) {
-  return useHttp.post<Result<IPage<MenuVO>>>(`/user-service/admin/menu/list?pageNo=${pageNo}&pageSize=${pageSize}`, dto)
+export function getMenuList(dto: SelectMenuListDTO) {
+  return useHttp.get<Result<MenuVO[]>>(`/user-service/admin/menu/list/tree`)
 }
 
 /**

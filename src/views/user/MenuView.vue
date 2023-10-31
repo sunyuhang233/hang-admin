@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getMenuList } from '@/api/user/menu'
+import { getMenuList, getMenuTree } from '@/api/user/menu'
 import type { IPage } from '@/types'
 import { StatusCode } from '@/types'
 import type { MenuVO, SelectMenuListDTO } from '@/types/user/menu'
@@ -46,10 +46,10 @@ async function loadData(type: 'page' | 'tree' = 'page') {
   if (menuListTree.value.length) isLoading.value = true
 
   if (type === 'page') {
-    const { data } = await getMenuList(pageNo.value, pageSize.value, searchDTO.value)
+    const { data } = await getMenuTree()
     if (data.code === StatusCode.SUCCESS) {
-      pageInfo.value = data.data
-      pageInfo.value = data.data
+      menuListTree.value = data.data
+      console.log('menuListTree', menuListTree.value)
     }
     // } else if (type === 'tree') {
     //   const { data } = await getRoleTree()
@@ -93,7 +93,7 @@ const isEdit = ref(false)
       ref="roleTableRef"
       v-loading="isLoading"
       class-name="w-full table-default"
-      :data="pageInfo.records"
+      :data="menuListTree"
       stripe
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       empty-text="暂无数据"
@@ -157,8 +157,11 @@ const isEdit = ref(false)
       <!-- 动作+弹窗 -->
     </el-table>
     <!-- 分页器 -->
-    <footer>
-      
+    <footer flex-row-bt-c>
+      <small>
+        共<strong class="text-1rem text-[var(--el-color-primary)]">{{ menuListTree.length }}</strong
+        >菜单
+      </small>
     </footer>
   </div>
 </template>
