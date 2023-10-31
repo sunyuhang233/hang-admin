@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { batchDeleteMenuByMenuId, getMenuList, getMenuTree, updateMenu } from '@/api/user/menu'
+import { batchDeleteMenuByMenuId, getMenuList, getMenuTree, insertMenu, updateMenu } from '@/api/user/menu'
 import type { IPage } from '@/types'
 import { StatusCode } from '@/types'
-import type { MenuVO, SelectMenuListDTO, UpdateMenuDTO } from '@/types/user/menu'
+import type { InsertMenuDTO, MenuVO, SelectMenuListDTO, UpdateMenuDTO } from '@/types/user/menu'
 import { MenuTypeObj, SysTypeObj } from '@/types/user/menu'
 import { compareObjects } from '@/utils'
 import { exportExcel } from '@/utils/elsx'
@@ -171,7 +171,7 @@ async function onSubmit(
         isLoading.value = true
         let res
         if (type === 'insert') {
-          console.log('insert', data)
+          res = await insertMenu(data as InsertMenuDTO)
         } else if (type === 'update') {
           if (!rawData) return
           res = await updateMenu(+rawData.id, data as UpdateMenuDTO)
@@ -325,8 +325,18 @@ function onShowInfoDetail(row?: Partial<MenuVO>, call?: () => any) {
       type: undefined,
       ...row,
     }
+  } else {
+    form.value = {
+      id: undefined,
+      code: undefined,
+      name: undefined,
+      parentId: row?.parentId,
+      linkUrl: undefined,
+      sortOrder: undefined,
+      sysType: undefined,
+      type: undefined,
+    }
   }
-  console.log('row', row)
 
   call && call()
   isShowForm.value = true
@@ -468,7 +478,7 @@ const selectParentProps = reactive({
               icon="Plus"
               type="primary"
               style="padding: 0rem 0.6rem"
-              @click="onShowInfoDetail({ parentId: row.id, children: row?.children }, () => (isEdit = true))" />
+              @click="onShowInfoDetail({ parentId: row.parentId, children: row?.children }, () => (isEdit = true))" />
           </div>
         </template>
       </el-table-column>
